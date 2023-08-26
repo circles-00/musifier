@@ -1,5 +1,5 @@
 import { BootMixin } from '@loopback/boot'
-import { ApplicationConfig } from '@loopback/core'
+import { ApplicationConfig, BindingScope } from '@loopback/core'
 import {
   RestExplorerBindings,
   RestExplorerComponent,
@@ -11,6 +11,7 @@ import path from 'path'
 import { MySequence } from './sequence'
 import { TypeOrmMixin } from '@loopback/typeorm'
 import { PostgresConnection } from './connections'
+import { SpotifyService, SPOTIFY_SERVICE } from './domains/spotify'
 
 export { ApplicationConfig }
 
@@ -44,5 +45,9 @@ export class ApiApplication extends BootMixin(
     }
   }
 
-  setupBindings(): void {}
+  setupBindings(): void {
+    this.bind(SPOTIFY_SERVICE)
+      .toClass(SpotifyService)
+      .inScope(BindingScope.SINGLETON)
+  }
 }

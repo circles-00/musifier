@@ -8,4 +8,9 @@ export const env = cleanEnv(process.env, {
   DATABASE_USERNAME: str({ default: 'postgres' }),
   DATABASE_PASSWORD: str({ default: 'postgres' }),
   DATABASE_NAME: str({ default: 'postgres' }),
+  SPOTIFY_AUTH_BASE_URL: str({
+    default: 'https://accounts.spotify.com/api/token',
+  }),
+  SPOTIFY_CLIENT_ID: str({ default: 'your-client-id' }),
+  SPOTIFY_CLIENT_SECRET: str({ default: 'your-client-secret' }),
 })
