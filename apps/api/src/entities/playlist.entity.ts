@@ -7,21 +7,30 @@ import {
 } from '@loopback/typeorm'
 import { Base } from './base'
 import { Image } from './image.entity'
-import { Playlist } from './playlist.entity'
+import { Track } from './track.entity'
 
 @Entity()
-export class Category extends Base {
+export class Playlist extends Base {
   @Column()
   name: string
 
   @Column()
   externalId: string
 
+  @Column()
+  description: string
+
   @OneToOne(() => Image)
   @JoinColumn()
-  icon: Image
+  image: Image
 
-  @ManyToMany(() => Playlist)
+  @Column()
+  tracks: number
+
+  @Column({ nullable: true })
+  primaryColor: string
+
+  @ManyToMany(() => Track)
   @JoinColumn()
-  playlists: Playlist[]
+  tracksList: Track[]
 }

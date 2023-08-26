@@ -2,6 +2,7 @@ import { stringify } from 'querystring'
 import { env } from '../../../utils'
 import axios, { type AxiosError } from 'axios'
 import {
+  IRawSpotifyCategory,
   IRawSpotifyPlaylist,
   IRawSpotifyTrackItem,
   ISpotifyCategory,
@@ -64,7 +65,7 @@ export class SpotifyService {
     }
   }
 
-  async getCategories(): Promise<Omit<ISpotifyCategory, 'icons'>[]> {
+  async getCategories(): Promise<ISpotifyCategory[]> {
     return this.errorWrapper(async () => {
       const { data } = await axios.get(
         'https://api.spotify.com/v1/browse/categories',
@@ -74,10 +75,10 @@ export class SpotifyService {
           },
         },
       )
-      const rawCategories: Omit<ISpotifyCategory, 'icon'>[] =
-        data.categories.items
+      const rawCategories: IRawSpotifyCategory[] = data.categories.items
 
-      return rawCategories.map(({ icons, ...rest }) => ({
+      return rawCategories.map(({ icons, id, ...rest }) => ({
+        externalId: id,
         icon: icons?.[0],
         ...rest,
       }))
@@ -104,7 +105,7 @@ export class SpotifyService {
           name,
           description,
           href,
-          id,
+          externalId: id,
           primaryColor: primary_color,
         }),
       )
@@ -126,12 +127,12 @@ export class SpotifyService {
 
       return rawTracks.map(({ primary_color, track }) => ({
         primaryColor: primary_color,
-        artist: track.artists.map(({ name }) => name).join(', '),
+        artists: track.artists,
         duration: track.duration_ms,
-        id: track.id,
+        externalId: track.id,
         name: track.name,
         album: {
-          id: track.album.id,
+          externalId: track.album.id,
           name: track.album.name,
           releaseDate: track.album.release_date,
           image: track.album.images?.[0],

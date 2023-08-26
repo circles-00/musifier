@@ -1,5 +1,4 @@
 import { type DataSourceOptions } from '@loopback/typeorm'
-import { Category } from '../entities'
 import { env } from '../utils'
 
 export const PostgresConnection: DataSourceOptions = {
@@ -10,6 +9,6 @@ export const PostgresConnection: DataSourceOptions = {
   password: env.DATABASE_PASSWORD,
   database: env.DATABASE_NAME,
   port: env.DATABASE_PORT,
-  entities: [Category],
+  entities: ['dist/entities/*.entity.js'],
   synchronize: true,
 }

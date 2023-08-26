@@ -6,8 +6,14 @@ type TSpotifyIcon = {
 
 export interface ISpotifyCategory {
   href: string
-  icons?: TSpotifyIcon[]
-  icon?: TSpotifyIcon
+  icon: TSpotifyIcon
+  externalId: string
+  name: string
+}
+
+export interface IRawSpotifyCategory {
+  href: string
+  icons: TSpotifyIcon[]
   id: string
   name: string
 }
@@ -28,9 +34,10 @@ export interface IRawSpotifyPlaylist {
 }
 
 export interface ISpotifyPlaylist
-  extends Pick<IRawSpotifyPlaylist, 'href' | 'description' | 'id' | 'name'> {
+  extends Pick<IRawSpotifyPlaylist, 'description' | 'name'> {
   image: TSpotifyIcon
   tracks: number
+  externalId: string
   primaryColor: string | null
 }
 
@@ -43,7 +50,7 @@ export interface IRawSpotifyAlbum {
 }
 
 export interface ISpotifyArtist {
-  id: string
+  externalId: string
   name: string
 }
 
@@ -61,7 +68,7 @@ export interface IRawSpotifyTrackItem {
 }
 
 export interface ISpotifyAlbum {
-  id: string
+  externalId: string
   image: TSpotifyIcon
   name: string
   releaseDate: string
@@ -70,9 +77,9 @@ export interface ISpotifyAlbum {
 
 export interface ISpotifyTrack {
   album: ISpotifyAlbum
-  artist: string
+  artists: ISpotifyArtist[]
   duration: number
-  id: string
+  externalId: string
   name: string
   primaryColor: string | null
 }
