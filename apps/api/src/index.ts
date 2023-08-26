@@ -1,5 +1,5 @@
 import { ApplicationConfig, ApiApplication } from './application'
-
+import { env } from './utils'
 export * from './application'
 
 export async function main(options: ApplicationConfig = {}) {
@@ -20,8 +20,8 @@ if (require.main === module) {
   // Run the application
   const config = {
     rest: {
-      port: +(process.env.PORT ?? 8080),
-      host: process.env.HOST,
+      port: env.PORT,
+      host: env.HOST,
       // The `gracePeriodForClose` provides a graceful close for http/https
       // servers with keep-alive clients. The default value is `Infinity`
       // (don't force-close). If you want to immediately destroy all sockets

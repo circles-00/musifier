@@ -22,7 +22,8 @@
     "openapi-spec": "node ./dist/openapi-spec",
     "prestart": "yarn run rebuild",
     "start": "node -r source-map-support/register .",
-    "dev": "tsc-watch --target es2017 --outDir ./dist --onSuccess \"node .\"",
+    "watch": "tsc-watch --target es2017 --outDir ./dist --onSuccess \"node .\"",
+    "dev": "yarn rebuild && env-cmd -f .env yarn watch",
     "clean": "lb-clean dist *.tsbuildinfo .eslintcache",
     "rebuild": "yarn run clean && yarn run build"
   },
@@ -41,7 +42,10 @@
     "@loopback/rest": "12.0.8",
     "@loopback/rest-explorer": "5.0.8",
     "@loopback/service-proxy": "5.0.8",
+    "@loopback/typeorm": "0.9.2",
+    "envalid": "7.3.1",
     "loopback-connector-postgresql": "6.0.2",
+    "postgre": "0.1.8",
     "postgres": "3.3.3",
     "tslib": "2.0.0"
   },
@@ -51,6 +55,7 @@
     "@loopback/testlab": "5.0.8",
     "@stolaar/eslint": "*",
     "@types/node": "14.18.36",
+    "env-cmd": "10.1.0",
     "eslint": "8.35.0",
     "source-map-support": "0.5.21",
     "tsc-watch": "6.0.0",

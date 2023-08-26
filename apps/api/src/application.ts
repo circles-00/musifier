@@ -9,16 +9,17 @@ import { RestApplication } from '@loopback/rest'
 import { ServiceMixin } from '@loopback/service-proxy'
 import path from 'path'
 import { MySequence } from './sequence'
-import { USERS_SERVICE } from './domains/users/keys'
-import { UserService } from './domains/users/services/user.service'
+import { TypeOrmMixin } from '@loopback/typeorm'
+import { PostgresConnection } from './connections'
 
 export { ApplicationConfig }
 
 export class ApiApplication extends BootMixin(
-  ServiceMixin(RepositoryMixin(RestApplication)),
+  ServiceMixin(RepositoryMixin(TypeOrmMixin(RestApplication))),
 ) {
   constructor(options: ApplicationConfig = {}) {
     super(options)
+    this.connection(PostgresConnection)
 
     this.setupBindings()
 
@@ -40,15 +41,8 @@ export class ApiApplication extends BootMixin(
         extensions: ['.controller.js'],
         nested: true,
       },
-      repositories: {
-        dirs: ['domains/**/repositories'],
-        extensions: ['.repository.js'],
-        nested: true,
-      },
     }
   }
 
-  setupBindings(): void {
-    this.bind(USERS_SERVICE).toClass(UserService)
-  }
+  setupBindings(): void {}
 }
