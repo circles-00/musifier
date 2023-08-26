@@ -45,7 +45,6 @@
     "@loopback/typeorm": "0.9.2",
     "envalid": "7.3.1",
     "loopback-connector-postgresql": "6.0.2",
-    "postgre": "0.1.8",
     "postgres": "3.3.3",
     "tslib": "2.0.0"
   },
