@@ -1,21 +1,17 @@
 import { inject } from '@loopback/core'
 import { api, get } from '@loopback/rest'
-import { Repository, typeorm } from '@loopback/typeorm'
-import { Category } from '../../../entities'
-import { SpotifyService, SPOTIFY_SERVICE } from '../../spotify'
+import { SyncService } from '../../sync'
+import { SYNC_SERVICE } from '../../sync/keys'
 
 @api({ basePath: '/api/categories' })
 export class CategoriesController {
-  @typeorm.repository(Category)
-  private categoryRepository: Repository<Category>
-
   constructor(
-    @inject(SPOTIFY_SERVICE) private readonly spotifyService: SpotifyService,
+    @inject(SYNC_SERVICE) private readonly syncService: SyncService,
   ) {}
 
   @get('/')
   async findCategories() {
     //TODO: Implement this method
-    return this.spotifyService.getCategories()
+    return this.syncService.syncData()
   }
 }

@@ -12,6 +12,8 @@ import { MySequence } from './sequence'
 import { TypeOrmMixin } from '@loopback/typeorm'
 import { PostgresConnection } from './connections'
 import { SpotifyService, SPOTIFY_SERVICE } from './domains/spotify'
+import { SYNC_SERVICE } from './domains/sync/keys'
+import { SyncService } from './domains/sync'
 
 export { ApplicationConfig }
 
@@ -49,5 +51,7 @@ export class ApiApplication extends BootMixin(
     this.bind(SPOTIFY_SERVICE)
       .toClass(SpotifyService)
       .inScope(BindingScope.SINGLETON)
+
+    this.bind(SYNC_SERVICE).toClass(SyncService).inScope(BindingScope.SINGLETON)
   }
 }

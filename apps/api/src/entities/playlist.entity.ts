@@ -2,6 +2,7 @@ import {
   Column,
   Entity,
   JoinColumn,
+  JoinTable,
   ManyToMany,
   OneToOne,
 } from '@loopback/typeorm'
@@ -20,7 +21,7 @@ export class Playlist extends Base {
   @Column()
   description: string
 
-  @OneToOne(() => Image)
+  @OneToOne(() => Image, { cascade: true })
   @JoinColumn()
   image: Image
 
@@ -30,7 +31,7 @@ export class Playlist extends Base {
   @Column({ nullable: true })
   primaryColor: string
 
-  @ManyToMany(() => Track)
-  @JoinColumn()
+  @ManyToMany(() => Track, { cascade: true })
+  @JoinTable()
   tracksList: Track[]
 }

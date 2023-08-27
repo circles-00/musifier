@@ -3,10 +3,10 @@ import { Base } from './base'
 
 @Entity()
 export class Image extends Base {
-  @Column()
+  @Column({ nullable: true })
   width: number
 
-  @Column()
+  @Column({ nullable: true })
   height: number
 
   @Column()

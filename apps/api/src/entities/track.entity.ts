@@ -2,6 +2,7 @@ import {
   Column,
   Entity,
   JoinColumn,
+  JoinTable,
   ManyToMany,
   ManyToOne,
 } from '@loopback/typeorm'
@@ -23,10 +24,11 @@ export class Track extends Base {
   @Column({ nullable: true })
   primaryColor: string
 
-  @ManyToOne(() => Album)
+  @ManyToOne(() => Album, { cascade: true })
+  @JoinColumn()
   album: Album
 
-  @ManyToMany(() => Artist)
-  @JoinColumn()
+  @ManyToMany(() => Artist, { cascade: true })
+  @JoinTable()
   artists: Artist[]
 }

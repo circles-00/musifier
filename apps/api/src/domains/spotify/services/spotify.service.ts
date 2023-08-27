@@ -53,6 +53,10 @@ export class SpotifyService {
     } catch (error) {
       const axiosError = error as AxiosError
 
+      if (axiosError.response?.status === 404) {
+        return [] as T
+      }
+
       if (
         axiosError.response?.status === 401 ||
         axiosError.response?.status === 403
@@ -77,10 +81,10 @@ export class SpotifyService {
       )
       const rawCategories: IRawSpotifyCategory[] = data.categories.items
 
-      return rawCategories.map(({ icons, id, ...rest }) => ({
+      return rawCategories.map(({ icons, id, name }) => ({
         externalId: id,
         icon: icons?.[0],
-        ...rest,
+        name,
       }))
     })
   }
@@ -123,20 +127,25 @@ export class SpotifyService {
         },
       )
 
-      const rawTracks: IRawSpotifyTrackItem[] = data.items
+      const rawTracks: IRawSpotifyTrackItem[] = (
+        data.items as IRawSpotifyTrackItem[]
+      ).filter(({ track }) => !!track?.album?.id && !!track?.album?.name)
 
       return rawTracks.map(({ primary_color, track }) => ({
         primaryColor: primary_color,
-        artists: track.artists,
-        duration: track.duration_ms,
-        externalId: track.id,
-        name: track.name,
+        artists: track?.artists.map(({ id, name }) => ({
+          externalId: id,
+          name,
+        })),
+        duration: track?.duration_ms,
+        externalId: track?.id,
+        name: track?.name,
         album: {
-          externalId: track.album.id,
-          name: track.album.name,
-          releaseDate: track.album.release_date,
-          image: track.album.images?.[0],
-          tracks: track.album.total_tracks,
+          externalId: track?.album?.id,
+          name: track?.album?.name,
+          releaseDate: track?.album?.release_date,
+          image: track?.album.images?.[0],
+          tracks: track?.album?.total_tracks,
         },
       }))
     })
