@@ -14,6 +14,9 @@ import { PostgresConnection } from './connections'
 import { SpotifyService, SPOTIFY_SERVICE } from './domains/spotify'
 import { SYNC_SERVICE } from './domains/sync/keys'
 import { SyncService } from './domains/sync'
+import { schedulingServiceBinding } from './domains/sync'
+import { CronComponent } from '@loopback/cron'
+import { warn } from 'console'
 
 export { ApplicationConfig }
 
@@ -33,7 +36,8 @@ export class ApiApplication extends BootMixin(
     this.configure(RestExplorerBindings.COMPONENT).to({
       path: '/explorer',
     })
-    this.component(RestExplorerComponent)
+
+    this.registerComponents()
 
     this.projectRoot = __dirname
     // Customize @loopback/boot Booter Conventions here
@@ -47,11 +51,16 @@ export class ApiApplication extends BootMixin(
     }
   }
 
+  registerComponents(): void {
+    this.component(RestExplorerComponent)
+    this.component(CronComponent)
+  }
+
   setupBindings(): void {
     this.bind(SPOTIFY_SERVICE)
       .toClass(SpotifyService)
       .inScope(BindingScope.SINGLETON)
-
     this.bind(SYNC_SERVICE).toClass(SyncService).inScope(BindingScope.SINGLETON)
+    this.add(schedulingServiceBinding)
   }
 }
