@@ -1,13 +1,5 @@
-import {
-  Column,
-  Entity,
-  JoinColumn,
-  JoinTable,
-  ManyToMany,
-  OneToOne,
-} from '@loopback/typeorm'
+import { Column, Entity, JoinTable, ManyToMany } from '@loopback/typeorm'
 import { Base } from './base'
-import { Image } from './image.entity'
 import { Playlist } from './playlist.entity'
 
 @Entity()
@@ -18,9 +10,8 @@ export class Category extends Base {
   @Column()
   externalId: string
 
-  @OneToOne(() => Image, { cascade: true })
-  @JoinColumn()
-  icon: Image
+  @Column({ nullable: true })
+  icon: string
 
   @ManyToMany(() => Playlist, { cascade: true })
   @JoinTable()

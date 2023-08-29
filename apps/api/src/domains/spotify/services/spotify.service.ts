@@ -83,7 +83,7 @@ export class SpotifyService {
 
       return rawCategories.map(({ icons, id, name }) => ({
         externalId: id,
-        icon: icons?.[0],
+        icon: icons?.[0]?.url,
         name,
       }))
     })
@@ -104,7 +104,7 @@ export class SpotifyService {
 
       return rawPlaylist.map(
         ({ images, tracks, name, description, href, id, primary_color }) => ({
-          image: images?.[0],
+          image: images?.[0]?.url,
           tracks: tracks.total,
           name,
           description,
@@ -144,7 +144,7 @@ export class SpotifyService {
           externalId: track?.album?.id,
           name: track?.album?.name,
           releaseDate: track?.album?.release_date,
-          image: track?.album.images?.[0],
+          image: track?.album.images?.[0]?.url,
           tracks: track?.album?.total_tracks,
         },
       }))

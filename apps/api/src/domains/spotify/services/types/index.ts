@@ -5,7 +5,7 @@ type TSpotifyIcon = {
 }
 
 export interface ISpotifyCategory {
-  icon: TSpotifyIcon
+  icon: string
   externalId: string
   name: string
 }
@@ -34,7 +34,7 @@ export interface IRawSpotifyPlaylist {
 
 export interface ISpotifyPlaylist
   extends Pick<IRawSpotifyPlaylist, 'description' | 'name'> {
-  image: TSpotifyIcon
+  image: string
   tracks: number
   externalId: string
   primaryColor?: string
@@ -73,7 +73,7 @@ export interface IRawSpotifyTrackItem {
 
 export interface ISpotifyAlbum {
   externalId: string
-  image: TSpotifyIcon
+  image: string
   name: string
   releaseDate: string
   tracks: number

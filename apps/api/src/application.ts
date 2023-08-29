@@ -16,7 +16,13 @@ import { SYNC_SERVICE } from './domains/sync/keys'
 import { SyncService } from './domains/sync'
 import { schedulingServiceBinding } from './domains/sync'
 import { CronComponent } from '@loopback/cron'
-import { warn } from 'console'
+import { CategoriesService, CATEGORIES_SERVICE } from './domains/categories'
+import {
+  DatabaseUtilsService,
+  DATABASE_UTILS_SERVICE,
+} from './domains/database-utils'
+import { PlaylistsService, PLAYLISTS_SERVICE } from './domains/playlists'
+import { TracksService, TRACKS_SERVICE } from './domains/tracks'
 
 export { ApplicationConfig }
 
@@ -61,6 +67,11 @@ export class ApiApplication extends BootMixin(
       .toClass(SpotifyService)
       .inScope(BindingScope.SINGLETON)
     this.bind(SYNC_SERVICE).toClass(SyncService).inScope(BindingScope.SINGLETON)
+    this.bind(CATEGORIES_SERVICE).toClass(CategoriesService)
+    this.bind(DATABASE_UTILS_SERVICE).toClass(DatabaseUtilsService)
+    this.bind(PLAYLISTS_SERVICE).toClass(PlaylistsService)
+    this.bind(TRACKS_SERVICE).toClass(TracksService)
+
     this.add(schedulingServiceBinding)
   }
 }

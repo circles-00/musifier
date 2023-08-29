@@ -1,17 +1,30 @@
 import { inject } from '@loopback/core'
-import { api, get } from '@loopback/rest'
-import { SyncService } from '../../sync'
-import { SYNC_SERVICE } from '../../sync/keys'
+import { api, get, param } from '@loopback/rest'
+import { Category } from '../../../entities'
+import { IRequestFilter, TFindRelations } from '../../../types'
+import { CATEGORIES_SERVICE } from '../keys'
+import { CategoriesService } from '../services'
 
-@api({ basePath: '/api/categories' })
+@api({ basePath: '/categories' })
 export class CategoriesController {
   constructor(
-    @inject(SYNC_SERVICE) private readonly syncService: SyncService,
+    @inject(CATEGORIES_SERVICE)
+    private readonly categoriesService: CategoriesService,
   ) {}
 
   @get('/')
-  async findCategories() {
-    //TODO: Implement this method
-    return this.syncService.syncData()
+  async findCategories(
+    @param.query.object('filter') filters: IRequestFilter,
+    @param.query.object('relations') relations?: TFindRelations<Category>,
+  ) {
+    return this.categoriesService.findCategories({ filters, relations })
+  }
+
+  @get('/{id}')
+  async findCategoryById(
+    @param.path.number('id') id: number,
+    @param.query.object('relations') relations?: TFindRelations<Category>,
+  ) {
+    return this.categoriesService.findCategoryById({ id, relations })
   }
 }

@@ -1,13 +1,5 @@
-import {
-  Column,
-  Entity,
-  JoinColumn,
-  JoinTable,
-  ManyToMany,
-  OneToOne,
-} from '@loopback/typeorm'
+import { Column, Entity, JoinTable, ManyToMany } from '@loopback/typeorm'
 import { Base } from './base'
-import { Image } from './image.entity'
 import { Track } from './track.entity'
 
 @Entity()
@@ -21,9 +13,8 @@ export class Playlist extends Base {
   @Column()
   description: string
 
-  @OneToOne(() => Image, { cascade: true })
-  @JoinColumn()
-  image: Image
+  @Column({ nullable: true })
+  image: string
 
   @Column()
   tracks: number
