@@ -14,4 +14,5 @@ export const env = cleanEnv(process.env, {
   SPOTIFY_CLIENT_ID: str({ default: 'your-client-id' }),
   SPOTIFY_CLIENT_SECRET: str({ default: 'your-client-secret' }),
   SYNC_CRON_TIME: str({ default: '0 5 * * *' }),
+  CACHE_PATH: str(),
 })

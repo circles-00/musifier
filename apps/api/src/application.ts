@@ -23,6 +23,7 @@ import {
 } from './domains/database-utils'
 import { PlaylistsService, PLAYLISTS_SERVICE } from './domains/playlists'
 import { TracksService, TRACKS_SERVICE } from './domains/tracks'
+import { StreamService, STREAM_SERVICE } from './domains/stream'
 
 export { ApplicationConfig }
 
@@ -71,6 +72,7 @@ export class ApiApplication extends BootMixin(
     this.bind(DATABASE_UTILS_SERVICE).toClass(DatabaseUtilsService)
     this.bind(PLAYLISTS_SERVICE).toClass(PlaylistsService)
     this.bind(TRACKS_SERVICE).toClass(TracksService)
+    this.bind(STREAM_SERVICE).toClass(StreamService)
 
     this.add(schedulingServiceBinding)
   }
