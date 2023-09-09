@@ -11,7 +11,8 @@
   "scripts": {
     "dev": "turbo dev",
     "eslint": "turbo eslint",
-    "lb4": "lb4"
+    "lb4": "lb4",
+    "lint": "turbo lint"
   },
   "engines": {
     "npm": "please-use-yarn",
