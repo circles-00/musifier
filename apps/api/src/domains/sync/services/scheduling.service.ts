@@ -1,5 +1,6 @@
 import { BindingScope, createBindingFromClass, inject } from '@loopback/core'
 import { cronJob, CronJob } from '@loopback/cron'
+import { env } from '../../../utils'
 import { SYNC_SERVICE } from '../keys'
 import { SyncService } from './sync.service'
 
@@ -12,7 +13,7 @@ export class SchedulingService extends CronJob {
         console.log('Syncing data...')
         await this.syncService.syncData()
       },
-      cronTime: '38 2 * * *', // TODO: Change after testing
+      cronTime: env.SYNC_CRON_TIME,
       start: true,
     })
   }
