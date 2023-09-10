@@ -1,18 +1,9 @@
-import { DataService } from '@/services'
-import { useQuery } from '@tanstack/react-query'
-import { uniqueId } from 'lodash'
+import { Categories } from '@/domains/home'
 
-const Home = () => {
-  const { data } = useQuery({
-    queryFn: () => DataService.getCategoriesWithPlaylists(),
-    queryKey: DataService.getCategoriesWithPlaylists.queryKey(),
-  })
-
-  return data?.data?.map(({ name }) => (
-    <div key={uniqueId()}>
-      <h2>{name}</h2>
-    </div>
-  ))
-}
+const Home = () => (
+  <div className="flex flex-col gap-8">
+    <Categories />
+  </div>
+)
 
 export default Home

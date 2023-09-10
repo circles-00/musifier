@@ -1,3 +1,4 @@
+import { structureFilterParams } from '@/utils'
 import axios from 'axios'
 import { ICommonResponse, IPagination } from '../types'
 import { createApiHandler } from '../utils'
@@ -10,7 +11,7 @@ export const getCategoriesWithPlaylists = createApiHandler(
       {
         params: {
           'relations[playlists]': true,
-          ...params,
+          ...structureFilterParams(params),
         },
       },
     )

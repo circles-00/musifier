@@ -1,6 +1,6 @@
 export interface IPagination {
-  page: number
-  pageSize: number
+  pageParam?: number
+  pageSize?: number
 }
 
 export interface IMetadata {
@@ -13,5 +13,5 @@ export interface IMetadata {
 
 export interface ICommonResponse<T> {
   data: T
-  metadata: IMetadata
+  metaData: IMetadata
 }

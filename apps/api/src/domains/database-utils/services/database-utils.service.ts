@@ -31,8 +31,8 @@ export class DatabaseUtilsService {
       data,
       metaData: {
         previousPage: page === 1 ? null : page - 1,
-        currentPage: page,
-        nextPage: page !== numberOfPages ? page + 1 : null,
+        currentPage: +page,
+        nextPage: +page !== numberOfPages ? +page + 1 : null,
         pages: numberOfPages,
         records: count,
       },
