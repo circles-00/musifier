@@ -73,7 +73,7 @@ export class StreamService {
       .map(({ name }) => name)
       .join(',')}`
 
-    const cacheExists = this.checkIfCacheExists(trackName)
+    const cacheExists = this.checkIfCacheExists(trackFromDb?.cacheKey)
 
     if (!trackFromDb.cacheKey || !cacheExists) {
       const [trackFromYt] = await this.searchTrackOnYoutube(trackName)
