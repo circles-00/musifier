@@ -3,20 +3,18 @@ import {
   useIsBrowser,
   useMusicPlayerActions,
   useMusicPlayerCurrentTrackId,
-  useMusicPlayerIsPlaying,
   useMusicPlayerSeekTime,
 } from '@/hooks'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 
 export const useMusicPlayer = () => {
   const [currentTime, setCurrentTime] = useState(0)
+  const [isPlaying, setIsPlaying] = useState(false)
 
-  const isPlaying = useMusicPlayerIsPlaying()
   const seekTime = useMusicPlayerSeekTime()
   const currentTrackId = useMusicPlayerCurrentTrackId()
 
-  const { setIsPlaying, setSeekTime, setCurrentTrackId } =
-    useMusicPlayerActions()
+  const { setSeekTime, setCurrentTrackId } = useMusicPlayerActions()
   const isBrowser = useIsBrowser()
   const src = useMemo(
     () => `/server/stream/${currentTrackId}`,

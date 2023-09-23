@@ -5,8 +5,5 @@ export const useMusicPlayerCurrentTrackId = () =>
 
 export const useMusicPlayerSeekTime = () => useStore((state) => state.seekTime)
 
-export const useMusicPlayerIsPlaying = () =>
-  useStore((state) => state.isPlaying)
-
 export const useMusicPlayerActions = () =>
   useStore((state) => state.musicPlayerActions)

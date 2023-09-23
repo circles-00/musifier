@@ -9,7 +9,6 @@ export const createMusicPlayerSlice: StateCreator<
   TMusicPlayerSlice
 > = (set) => ({
   seekTime: 0,
-  isPlaying: false,
   musicPlayerActions: {
     setCurrentTrackId: (trackId: number) =>
       set((state) => {
@@ -18,10 +17,6 @@ export const createMusicPlayerSlice: StateCreator<
     setSeekTime: (seekTime: number) =>
       set((state) => {
         state.seekTime = seekTime
-      }),
-    setIsPlaying: (isPlaying: boolean) =>
-      set((state) => {
-        state.isPlaying = isPlaying
       }),
   },
 })
