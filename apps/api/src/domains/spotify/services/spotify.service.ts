@@ -147,6 +147,7 @@ export class SpotifyService {
           image: track?.album.images?.[0]?.url,
           tracks: track?.album?.total_tracks,
         },
+        image: track?.album?.images?.[0]?.url,
       }))
     })
   }

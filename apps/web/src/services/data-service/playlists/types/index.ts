@@ -1,3 +1,5 @@
+import { ITrack } from '../../tracks'
+
 export interface IPlalylist {
   id: number
   createdAt: string
@@ -8,4 +10,5 @@ export interface IPlalylist {
   image: string
   tracks: number
   primaryColor: string | null
+  tracksList: ITrack[]
 }

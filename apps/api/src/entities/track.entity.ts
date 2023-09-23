@@ -27,6 +27,9 @@ export class Track extends Base {
   @Column({ nullable: true })
   cacheKey: string
 
+  @Column({ nullable: true })
+  image: string
+
   @ManyToOne(() => Album, { cascade: true })
   @JoinColumn()
   album: Album

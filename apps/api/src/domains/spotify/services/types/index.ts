@@ -64,6 +64,7 @@ export interface IRawSpotifyTrack {
   duration_ms: number
   id: string
   name: string
+  images: TSpotifyIcon[]
 }
 
 export interface IRawSpotifyTrackItem {
@@ -86,4 +87,5 @@ export interface ISpotifyTrack {
   externalId: string
   name: string
   primaryColor?: string
+  image: string
 }
