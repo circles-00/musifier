@@ -310,6 +310,11 @@
     "@hapi/hoek" "^11.0.2"
     "@hapi/topo" "^6.0.1"
 
+"@heroicons/react@2.0.18":
+  version "2.0.18"
+  resolved "https://registry.yarnpkg.com/@heroicons/react/-/react-2.0.18.tgz#f80301907c243df03c7e9fd76c0286e95361f7c1"
+  integrity sha512-7TyMjRrZZMBPa+/5Y8lN0iyvUU/01PeMGX2+RE7cQWpEUIcb4QotzUObFkJDejj/HUH4qjP/eQ0gzzKs2f+6Yw==
+
 "@humanwhocodes/config-array@^0.11.8":
   version "0.11.8"
   resolved "https://registry.yarnpkg.com/@humanwhocodes/config-array/-/config-array-0.11.8.tgz#03595ac2075a4dc0f191cc2131de14fbd7d410b9"
@@ -2019,6 +2024,11 @@ cliui@^8.0.1:
     string-width "^4.2.0"
     strip-ansi "^6.0.1"
     wrap-ansi "^7.0.0"
+
+clsx@2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/clsx/-/clsx-2.0.0.tgz#12658f3fd98fafe62075595a5c30e43d18f3d00b"
+  integrity sha512-rQ1+kcj+ttHG0MKVGBUXwayCCF1oh39BF5COIpRzuCEv8Mwjv0XucrI2ExNTOn9IlLifGClWQcU9BrZORvtw6Q==
 
 color-convert@^1.9.0:
   version "1.9.3"
@@ -3766,6 +3776,11 @@ ignore@^5.2.0, ignore@^5.2.4:
   version "5.2.4"
   resolved "https://registry.yarnpkg.com/ignore/-/ignore-5.2.4.tgz#a291c0c6178ff1b960befe47fcdec301674a6324"
   integrity sha512-MAb38BcSbH0eHNBxn7ql2NH/kX33OkB3lZ1BNdh7ENeRChHTYsTvWrMubiIAMNS2llXEEgZ1MUOBtXChP3kaFQ==
+
+immer@10.0.2:
+  version "10.0.2"
+  resolved "https://registry.yarnpkg.com/immer/-/immer-10.0.2.tgz#11636c5b77acf529e059582d76faf338beb56141"
+  integrity sha512-Rx3CqeqQ19sxUtYV9CU911Vhy8/721wRFnJv3REVGWUmoAcIwzifTsdmJte/MV+0/XpM35LZdQMBGkRIoLPwQA==
 
 import-fresh@^3.0.0, import-fresh@^3.2.1:
   version "3.3.0"
@@ -6599,6 +6614,11 @@ turbo@1.8.2:
     turbo-windows-64 "1.8.2"
     turbo-windows-arm64 "1.8.2"
 
+tw-merge@0.0.1-alpha.3:
+  version "0.0.1-alpha.3"
+  resolved "https://registry.yarnpkg.com/tw-merge/-/tw-merge-0.0.1-alpha.3.tgz#07a95e5add1d1a646cd394a2d14ce40855639c27"
+  integrity sha512-HvuKdaUWjJKFlUa/DKDGnicPXill0bUZnzoK/BoTWn0OkKLfIrMMn97VXW6fFdArA40FeBkitWjr7SJRuaDvCg==
+
 type-check@^0.4.0, type-check@~0.4.0:
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/type-check/-/type-check-0.4.0.tgz#07b8203bfa7056c0657050e3ccd2c37730bab8f1"
@@ -6768,7 +6788,7 @@ uri-js@^4.2.2:
   dependencies:
     punycode "^2.1.0"
 
-use-sync-external-store@^1.2.0:
+use-sync-external-store@1.2.0, use-sync-external-store@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/use-sync-external-store/-/use-sync-external-store-1.2.0.tgz#7dbefd6ef3fe4e767a0cf5d7287aacfb5846928a"
   integrity sha512-eEgnFxGQ1Ife9bzYs6VLi8/4X6CObHMw9Qr9tPY43iKwsPw8xE8+EFsf/2cFZ5S3esXgpWgtSCtLNS41F+sKPA==
@@ -7067,3 +7087,10 @@ ytdl-core@4.10.0:
     m3u8stream "^0.8.4"
     miniget "^4.0.0"
     sax "^1.1.3"
+
+zustand@4.4.1:
+  version "4.4.1"
+  resolved "https://registry.yarnpkg.com/zustand/-/zustand-4.4.1.tgz#0cd3a3e4756f21811bd956418fdc686877e8b3b0"
+  integrity sha512-QCPfstAS4EBiTQzlaGP1gmorkh/UL1Leaj2tdj+zZCZ/9bm0WS7sI2wnfD5lpOszFqWJ1DcPnGoY8RDL61uokw==
+  dependencies:
+    use-sync-external-store "1.2.0"

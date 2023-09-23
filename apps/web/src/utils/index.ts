@@ -1,4 +1,7 @@
+export * from './convert-ms-to-s'
+export * from './get-first-letter-capitalized'
 export * from './get-time-of-day'
+export * from './mergeClassNames'
 export * from './string-max-chars'
 export * from './strip-html-tags'
 export * from './structure-filter-params'

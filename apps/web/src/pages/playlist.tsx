@@ -43,6 +43,7 @@ const PlaylistPage = () => {
           ({ id: trackId, name: title, image, artists }) => (
             <Track
               key={trackId}
+              id={trackId}
               title={title}
               image={image}
               artist={artists?.map(({ name }) => name)?.join(', ')}
