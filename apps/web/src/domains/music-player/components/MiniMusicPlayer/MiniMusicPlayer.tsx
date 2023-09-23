@@ -6,7 +6,7 @@ import { PlayIcon, PauseIcon } from '@heroicons/react/24/solid'
 import { useMusicPlayerContext } from '../../hooks'
 import { LinearProgressBar } from '@/components'
 import { useMemo } from 'react'
-import { convertMsToS } from '@/utils'
+import { convertMsToS, stringMaxChars } from '@/utils'
 
 export const MiniMusicPlayer = () => {
   const currentTrackId = useMusicPlayerCurrentTrackId()
@@ -34,8 +34,8 @@ export const MiniMusicPlayer = () => {
   }
 
   return (
-    <div className="w-full fixed bottom-3 left-4 z-10 bg-red-600">
-      <div className="flex w-11/12 justify-between p-2 items-center">
+    <div className="w-11/12 fixed bottom-3 left-4 z-10 bg-red-600">
+      <div className="flex justify-between p-2 items-center">
         <div className="flex gap-4 ">
           <Image
             src={data?.image ?? ''}
@@ -46,7 +46,10 @@ export const MiniMusicPlayer = () => {
           <div className="flex flex-col">
             <p className="">{data?.name}</p>
             <p className="text-gray-200 text-sm">
-              {data?.artists?.map(({ name }) => name)?.join(', ')}
+              {stringMaxChars(
+                data?.artists?.map(({ name }) => name)?.join(', '),
+                30,
+              )}
             </p>
           </div>
         </div>
