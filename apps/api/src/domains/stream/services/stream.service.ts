@@ -15,7 +15,7 @@ export class StreamService {
     @typeorm.repository(Track)
     private readonly trackRepository: Repository<Track>,
     private readonly ytSearch = new Youtube.Scraper(),
-  ) {}
+  ) { }
 
   async searchTrackOnYoutube(trackName: string) {
     const { videos } = await this.ytSearch.search(trackName)
@@ -54,7 +54,11 @@ export class StreamService {
     return readFileSync(join(this.cachePath, cacheKey))
   }
 
-  checkIfCacheExists(trackName: string) {
+  checkIfCacheExists(trackName: string | null) {
+    if (!trackName) {
+      return false
+    }
+
     return existsSync(join(this.cachePath, trackName))
   }
 
