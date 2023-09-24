@@ -7,8 +7,12 @@ import { useMusicPlayerContext } from '../../hooks'
 import { LinearProgressBar } from '@/components'
 import { useMemo } from 'react'
 import { convertMsToS, stringMaxChars } from '@/utils'
+import { useRouter } from 'next/router'
+import { hiddenScreens } from './utils'
 
 export const MiniMusicPlayer = () => {
+  const router = useRouter()
+
   const currentTrackId = useMusicPlayerCurrentTrackId()
   const { data } = useQuery({
     queryFn: () => DataService.getOneTrack(currentTrackId as number),
@@ -20,6 +24,7 @@ export const MiniMusicPlayer = () => {
     isPlaying,
     onToggle: onToggleMusicPlayer,
     currentTime,
+    toggleMiniPlayer,
   } = useMusicPlayerContext()
 
   const progress = useMemo(() => {
@@ -29,14 +34,17 @@ export const MiniMusicPlayer = () => {
     return progressPercentage
   }, [currentTime, data?.duration])
 
-  if (!data) {
+  if (!data || hiddenScreens.includes(router.pathname)) {
     return null
   }
 
   return (
-    <div className="w-11/12 fixed bottom-3 left-4 z-10 bg-red-600">
+    <div
+      className="w-11/12 fixed bottom-3 left-4 z-10 bg-red-600"
+      onClick={toggleMiniPlayer}
+    >
       <div className="flex justify-between p-2 items-center">
-        <div className="flex gap-4 ">
+        <div className="flex gap-4">
           <Image
             src={data?.image ?? ''}
             alt={data?.name ?? ''}
@@ -53,7 +61,13 @@ export const MiniMusicPlayer = () => {
             </p>
           </div>
         </div>
-        <button onClick={onToggleMusicPlayer} className="mr-4">
+        <button
+          onClick={(e) => {
+            e.stopPropagation()
+            onToggleMusicPlayer()
+          }}
+          className="mr-4"
+        >
           {isPlaying ? (
             <PauseIcon className="w-10 h-10" />
           ) : (

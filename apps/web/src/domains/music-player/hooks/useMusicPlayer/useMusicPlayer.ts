@@ -10,6 +10,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 export const useMusicPlayer = () => {
   const [currentTime, setCurrentTime] = useState(0)
   const [isPlaying, setIsPlaying] = useState(false)
+  const [isMiniPlayerVisible, setIsMiniPlayerVisible] = useState(true)
 
   const seekTime = useMusicPlayerSeekTime()
   const currentTrackId = useMusicPlayerCurrentTrackId()
@@ -65,6 +66,21 @@ export const useMusicPlayer = () => {
     },
     [setCurrentTrackId, setSeekTime],
   )
+
+  const seekTo = useCallback(
+    (seconds: number) => {
+      if (!audioElement) {
+        return
+      }
+
+      audioElement.currentTime = seconds
+    },
+    [audioElement],
+  )
+
+  const toggleMiniPlayer = useCallback(() => {
+    setIsMiniPlayerVisible((isVisible) => !isVisible)
+  }, [setIsMiniPlayerVisible])
 
   // Initialize audio element with track source
   useEffect(() => {
@@ -123,5 +139,16 @@ export const useMusicPlayer = () => {
     }
   }, [audioElement?.currentTime, setIsPlaying, setSeekTime])
 
-  return { onPlay, onPause, isPlaying, onToggle, loadNewTrack, currentTime }
+  return {
+    onPlay,
+    onPause,
+    isPlaying,
+    onToggle,
+    loadNewTrack,
+    currentTime,
+    seekTo,
+    isMiniPlayerVisible,
+    setIsMiniPlayerVisible,
+    toggleMiniPlayer,
+  }
 }
