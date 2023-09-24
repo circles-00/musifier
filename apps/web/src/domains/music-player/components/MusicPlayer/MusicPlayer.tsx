@@ -21,15 +21,15 @@ export const MusicPlayer = () => {
       <button className="flex w-fit" onClick={toggleMiniPlayer}>
         <ChevronDownIcon className="w-10 h-10" />
       </button>
-      <div className="flex justify-center mt-10">
+      <div className="flex justify-center mt-5">
         <Image
           src={data?.image ?? ''}
           alt={data?.name ?? ''}
-          width={350}
-          height={350}
+          width={300}
+          height={300}
         />
       </div>
-      <div className="mt-28 ml-4 w-11/12 flex flex-col gap-5 justify-center">
+      <div className="mt-32 ml-4 w-11/12 flex flex-col gap-5 justify-center">
         <div>
           <h1 className="text-xl font-bold">{data?.name}</h1>
           <p className="text-gray-300">
