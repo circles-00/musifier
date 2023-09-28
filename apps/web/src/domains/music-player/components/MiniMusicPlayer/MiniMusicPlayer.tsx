@@ -39,11 +39,12 @@ export const MiniMusicPlayer = () => {
   }
 
   return (
+    // eslint-disable-next-line jsx-a11y/click-events-have-key-events
     <div
-      className="w-11/12 fixed bottom-3 left-4 z-10 bg-red-600"
+      className="fixed bottom-3 left-4 z-10 w-11/12 bg-red-600"
       onClick={toggleMiniPlayer}
     >
-      <div className="flex justify-between p-2 items-center">
+      <div className="flex items-center justify-between p-2">
         <div className="flex gap-4">
           <Image
             src={data?.image ?? ''}
@@ -53,7 +54,7 @@ export const MiniMusicPlayer = () => {
           />
           <div className="flex flex-col">
             <p className="">{data?.name}</p>
-            <p className="text-gray-200 text-sm">
+            <p className="text-sm text-gray-200">
               {stringMaxChars(
                 data?.artists?.map(({ name }) => name)?.join(', '),
                 30,
@@ -69,9 +70,9 @@ export const MiniMusicPlayer = () => {
           className="mr-4"
         >
           {isPlaying ? (
-            <PauseIcon className="w-10 h-10" />
+            <PauseIcon className="h-10 w-10" />
           ) : (
-            <PlayIcon className="w-10 h-10" />
+            <PlayIcon className="h-10 w-10" />
           )}
         </button>
       </div>
