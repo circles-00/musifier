@@ -21,7 +21,7 @@
     "preopenapi-spec": "yarn run build",
     "openapi-spec": "node ./dist/openapi-spec",
     "prestart": "yarn run rebuild",
-    "start": "node -r source-map-support/register .",
+    "start": "env-cmd -f .env node -r source-map-support/register .",
     "watch": "tsc-watch --target es2017 --outDir ./dist --onSuccess \"node .\"",
     "dev": "yarn rebuild && env-cmd -f .env yarn watch",
     "clean": "lb-clean dist *.tsbuildinfo .eslintcache",

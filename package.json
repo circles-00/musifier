@@ -12,7 +12,9 @@
     "dev": "turbo dev",
     "eslint": "turbo eslint",
     "lb4": "lb4",
-    "lint": "turbo lint"
+    "lint": "turbo lint",
+    "build": "turbo build",
+    "start": "turbo start"
   },
   "engines": {
     "npm": "please-use-yarn",
