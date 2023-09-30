@@ -10,7 +10,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 export const useMusicPlayer = () => {
   const [currentTime, setCurrentTime] = useState(0)
   const [isPlaying, setIsPlaying] = useState(false)
-  const [isMiniPlayerVisible, setIsMiniPlayerVisible] = useState(true)
+  const [isMiniPlayerVisible, setIsMiniPlayerVisible] = useState(false)
 
   const seekTime = useMusicPlayerSeekTime()
   const currentTrackId = useMusicPlayerCurrentTrackId()
@@ -91,6 +91,7 @@ export const useMusicPlayer = () => {
     const onEnded = () => {
       onPause()
       setSeekTime(0)
+      setCurrentTime(0)
     }
 
     audioElement.src = src
