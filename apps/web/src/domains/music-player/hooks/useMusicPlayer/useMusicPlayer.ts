@@ -10,7 +10,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 export const useMusicPlayer = () => {
   const [currentTime, setCurrentTime] = useState(0)
   const [isPlaying, setIsPlaying] = useState(false)
-  const [isMiniPlayerVisible, setIsMiniPlayerVisible] = useState(false)
+  const [isMiniPlayerVisible, setIsMiniPlayerVisible] = useState(true)
 
   const seekTime = useMusicPlayerSeekTime()
   const currentTrackId = useMusicPlayerCurrentTrackId()

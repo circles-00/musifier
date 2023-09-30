@@ -6,12 +6,12 @@ import type { AppProps } from 'next/app'
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <AppLayout>
-      <RootProvider>
+    <RootProvider>
+      <AppLayout>
         <MusicPlayerRenderer>
           <Component {...pageProps} />
         </MusicPlayerRenderer>
-      </RootProvider>
-    </AppLayout>
+      </AppLayout>
+    </RootProvider>
   )
 }
