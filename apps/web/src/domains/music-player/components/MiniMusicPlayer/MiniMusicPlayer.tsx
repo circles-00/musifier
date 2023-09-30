@@ -41,10 +41,10 @@ export const MiniMusicPlayer = () => {
   return (
     // eslint-disable-next-line jsx-a11y/click-events-have-key-events
     <div
-      className="fixed bottom-3 left-4 z-10 w-11/12 bg-red-600"
+      className="fixed bottom-16 left-4 z-10 w-11/12 bg-red-600"
       onClick={toggleMiniPlayer}
     >
-      <div className="flex items-center justify-between p-2">
+      <div className="flex items-center justify-between px-2 py-1">
         <div className="flex gap-4">
           <Image
             src={data?.image ?? ''}
