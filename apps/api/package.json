@@ -51,7 +51,7 @@
     "postgres": "3.3.3",
     "qs": "6.11.2",
     "tslib": "2.0.0",
-    "ytdl-core": "4.10.0"
+    "music-downloader": "*"
   },
   "devDependencies": {
     "@loopback/build": "9.0.8",
