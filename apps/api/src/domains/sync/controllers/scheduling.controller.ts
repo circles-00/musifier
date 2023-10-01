@@ -9,11 +9,7 @@ export class SchedulingController {
 
   @get('/sync')
   async sync() {
-    console.log('starting sync...')
-    // eslint-disable-next-line no-console
-    console.time('sync')
-    await this.syncService.syncData()
-    // eslint-disable-next-line no-console
-    console.timeEnd('sync')
+    this.syncService.syncData()
+    return 'success'
   }
 }
