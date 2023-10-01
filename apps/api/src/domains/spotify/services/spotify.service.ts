@@ -102,17 +102,19 @@ export class SpotifyService {
 
       const rawPlaylist: IRawSpotifyPlaylist[] = data.playlists.items
 
-      return rawPlaylist.map(
-        ({ images, tracks, name, description, href, id, primary_color }) => ({
-          image: images?.[0]?.url,
-          tracks: tracks.total,
-          name,
-          description,
-          href,
-          externalId: id,
-          primaryColor: primary_color,
-        }),
-      )
+      return rawPlaylist
+        .filter(Boolean)
+        .map(
+          ({ images, tracks, name, description, href, id, primary_color }) => ({
+            image: images?.[0]?.url,
+            tracks: tracks.total,
+            name,
+            description,
+            href,
+            externalId: id,
+            primaryColor: primary_color,
+          }),
+        )
     })
   }
 
