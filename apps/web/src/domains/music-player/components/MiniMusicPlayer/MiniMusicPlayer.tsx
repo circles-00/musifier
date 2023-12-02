@@ -53,7 +53,7 @@ export const MiniMusicPlayer = () => {
             height={40}
           />
           <div className="flex flex-col">
-            <p className="">{data?.name}</p>
+            <p className="">{stringMaxChars(data?.name, 25)}</p>
             <p className="text-sm text-gray-200">
               {stringMaxChars(
                 data?.artists?.map(({ name }) => name)?.join(', '),
