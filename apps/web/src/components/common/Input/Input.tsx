@@ -1,5 +1,5 @@
 import { mergeClassNames } from '@/utils'
-import { FC, ForwardedRef, forwardRef } from 'react'
+import { ForwardedRef, forwardRef } from 'react'
 import { IInput } from './types'
 
 const InputComponent = (
