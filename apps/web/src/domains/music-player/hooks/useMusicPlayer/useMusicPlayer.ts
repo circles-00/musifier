@@ -54,6 +54,8 @@ export const useMusicPlayer = () => {
         return
       }
 
+      // Note: This removes the track from the cache if it fails to play,
+      // which means the file is corrupted, so with this we can remove it from the cache and try again
       removeTrackFromCache(currentTrackId)
       resetRemoveTrackFromCacheMutation()
     })
