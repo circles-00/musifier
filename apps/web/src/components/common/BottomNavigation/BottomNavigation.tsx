@@ -1,3 +1,4 @@
+import { useMusicPlayerContext } from '@/domains/music-player'
 import {
   HomeIcon,
   MagnifyingGlassIcon as SearchIcon,
@@ -6,9 +7,11 @@ import {
 import { uniqueId } from 'lodash'
 import { useRouter } from 'next/router'
 import { useCallback, useMemo } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 export const BottomNavigation = () => {
-  const router = useRouter()
+  const navigate = useNavigate()
+  const location = useLocation()
 
   const navigationItems = useMemo(
     () => [
@@ -33,7 +36,7 @@ export const BottomNavigation = () => {
 
   const isActiveRoute = useCallback(
     (route: string) => {
-      const currentRoute = router.pathname
+      const currentRoute = location.pathname
 
       if (route === '/') {
         return route === currentRoute
@@ -41,14 +44,20 @@ export const BottomNavigation = () => {
 
       return currentRoute.includes(route)
     },
-    [router.pathname],
+    [location.pathname],
   )
+
+  const { isMiniPlayerVisible } = useMusicPlayerContext()
+
+  if (!isMiniPlayerVisible) {
+    return null
+  }
 
   return (
     <div className="fixed bottom-0 left-0 z-10 h-16 w-full bg-black bg-opacity-80">
       <div className="flex h-full items-center justify-evenly">
         {navigationItems.map(({ name, icon: Icon, route }) => (
-          <button onClick={() => router.push(route)} key={uniqueId()}>
+          <button onClick={() => navigate(route)} key={uniqueId()}>
             <div className="flex flex-col items-center justify-center gap-1">
               <Icon
                 className={`h-6 w-6 ${

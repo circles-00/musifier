@@ -7,11 +7,11 @@ import { useMusicPlayerContext } from '../../hooks'
 import { LinearProgressBar } from '@/components'
 import { useMemo } from 'react'
 import { convertMsToS, stringMaxChars } from '@/utils'
-import { useRouter } from 'next/router'
 import { hiddenScreens } from './utils'
+import { useLocation } from 'react-router-dom'
 
 export const MiniMusicPlayer = () => {
-  const router = useRouter()
+  const location = useLocation()
 
   const currentTrackId = useMusicPlayerCurrentTrackId()
   const { data } = useQuery({
@@ -34,7 +34,7 @@ export const MiniMusicPlayer = () => {
     return progressPercentage
   }, [currentTime, data?.duration])
 
-  if (!data || hiddenScreens.includes(router.pathname)) {
+  if (!data || hiddenScreens.includes(location.pathname)) {
     return null
   }
 

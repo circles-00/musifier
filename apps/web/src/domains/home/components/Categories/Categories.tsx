@@ -31,7 +31,7 @@ export const Categories: FC<ICategories> = () => {
               title: name,
               caption: description,
               image,
-              href: `/playlist?id=${id}`,
+              playlistId: id,
             }))}
           />
         ))}

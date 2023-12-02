@@ -3,13 +3,14 @@ import { DataService } from '@/services'
 import { ChevronDownIcon } from '@heroicons/react/24/solid'
 import { useQuery } from '@tanstack/react-query'
 import Image from 'next/image'
-import { useRouter } from 'next/router'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
+import { useLocation } from 'react-router-dom'
 import { useMusicPlayerContext } from '../../hooks'
 import { MusicPlayerControls } from './components/MusicPlayerControls/MusicPlayerControls'
 
 export const MusicPlayer = () => {
-  const router = useRouter()
+  const location = useLocation()
+  const [initialLocation, setInitialLocation] = useState<string | null>(null)
 
   const currentTrackId = useMusicPlayerCurrentTrackId()
   const { data } = useQuery({
@@ -21,10 +22,13 @@ export const MusicPlayer = () => {
   const { toggleMiniPlayer, setIsMiniPlayerVisible } = useMusicPlayerContext()
 
   useEffect(() => {
-    router.events.on('routeChangeComplete', () => {
-      setIsMiniPlayerVisible(true)
-    })
-  }, [router.events, setIsMiniPlayerVisible])
+    if (!initialLocation) {
+      setInitialLocation(location.pathname)
+      return
+    }
+
+    setIsMiniPlayerVisible(true)
+  }, [initialLocation, location.pathname, setIsMiniPlayerVisible])
 
   return (
     <div className="flex flex-col">

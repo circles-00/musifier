@@ -1,15 +1,16 @@
 import { DataService } from '@/services'
 import { useQuery } from '@tanstack/react-query'
-import { useRouter } from 'next/router'
 import { useEffect, useMemo } from 'react'
 import { PlaylistHeader } from '@/domains/playlist'
 import { TracksList } from '@/domains/tracks/components/TracksList/TracksList'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 const PlaylistPage = () => {
-  const router = useRouter()
-  const { id } = router.query
+  const location = useLocation()
+  const id = location.state?.id
   const parsedId = Number.parseInt(id as string)
 
+  const navigate = useNavigate()
   const { data } = useQuery({
     queryFn: () => DataService.getOnePlaylist(parsedId),
     queryKey: DataService.getOnePlaylist.queryKey(parsedId),
@@ -18,10 +19,10 @@ const PlaylistPage = () => {
 
   useEffect(() => {
     // TODO: Probably route back to 404 page
-    if (router.isReady && !id) {
-      router.back()
+    if (!id) {
+      navigate(-1)
     }
-  }, [id, router])
+  }, [id, navigate])
 
   const featuredArtists = useMemo(
     () =>
