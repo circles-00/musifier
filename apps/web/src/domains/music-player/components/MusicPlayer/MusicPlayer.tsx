@@ -24,7 +24,7 @@ export const MusicPlayer = () => {
     router.events.on('routeChangeComplete', () => {
       setIsMiniPlayerVisible(false)
     })
-  }, [router.events, setIsMiniPlayerVisible, toggleMiniPlayer])
+  }, [router.events, setIsMiniPlayerVisible])
 
   return (
     <div className="flex flex-col">
