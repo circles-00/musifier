@@ -9,12 +9,15 @@ interface IMusicPlayerRenderer {
 export const MusicPlayerRenderer: FC<IMusicPlayerRenderer> = ({ children }) => {
   const { isMiniPlayerVisible } = useMusicPlayerContext()
 
-  return isMiniPlayerVisible ? (
+  return (
     <>
-      <MiniMusicPlayer />
-      {children}
+      <div className={isMiniPlayerVisible ? 'block' : 'hidden'}>
+        <MiniMusicPlayer />
+        {children}
+      </div>
+      <div className={!isMiniPlayerVisible ? 'block' : 'hidden'}>
+        <MusicPlayer />
+      </div>
     </>
-  ) : (
-    <MusicPlayer />
   )
 }
