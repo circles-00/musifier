@@ -10,7 +10,7 @@ export const useStore = create<TState>()(
       ...createMusicPlayerSlice(...a),
     })),
     {
-      storage: createJSONStorage(() => sessionStorage),
+      storage: createJSONStorage(() => localStorage),
       name: 'store',
       partialize: (state: TState) =>
         Object.fromEntries(
