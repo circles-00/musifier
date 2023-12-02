@@ -22,7 +22,7 @@ export const MusicPlayer = () => {
 
   useEffect(() => {
     router.events.on('routeChangeComplete', () => {
-      setIsMiniPlayerVisible(false)
+      setIsMiniPlayerVisible(true)
     })
   }, [router.events, setIsMiniPlayerVisible])
 
