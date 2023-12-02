@@ -24,6 +24,8 @@ import {
 import { PlaylistsService, PLAYLISTS_SERVICE } from './domains/playlists'
 import { TracksService, TRACKS_SERVICE } from './domains/tracks'
 import { StreamService, STREAM_SERVICE } from './domains/stream'
+import { SEARCH_SERVICE } from './domains/search/keys'
+import { SearchService } from './domains/search/services/search.service'
 
 export { ApplicationConfig }
 
@@ -73,6 +75,7 @@ export class ApiApplication extends BootMixin(
     this.bind(PLAYLISTS_SERVICE).toClass(PlaylistsService)
     this.bind(TRACKS_SERVICE).toClass(TracksService)
     this.bind(STREAM_SERVICE).toClass(StreamService)
+    this.bind(SEARCH_SERVICE).toClass(SearchService)
 
     this.add(schedulingServiceBinding)
   }

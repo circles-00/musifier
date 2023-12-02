@@ -99,4 +99,25 @@ export class SyncService {
       await this.categoryRepository.save(categoryToSave)
     }
   }
+
+  async syncTracks(tracks: ISpotifyTrack[]) {
+    const tracksToSave = await this.constructTracks(tracks)
+
+    return await Promise.all(
+      tracksToSave.map(async (track) => {
+        const trackFromDb = await this.trackRepository.findOne({
+          where: {
+            externalId: track.externalId,
+          },
+          relations: ['artists', 'album'],
+        })
+
+        if (!trackFromDb) {
+          return await this.trackRepository.save(track)
+        }
+
+        return trackFromDb
+      }),
+    )
+  }
 }

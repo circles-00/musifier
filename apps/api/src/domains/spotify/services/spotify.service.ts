@@ -1,6 +1,6 @@
 import { stringify } from 'querystring'
 import { env } from '../../../utils'
-import axios, { type AxiosError } from 'axios'
+import axios, { AxiosError } from 'axios'
 import {
   IRawSpotifyCategory,
   IRawSpotifyPlaylist,
@@ -9,9 +9,11 @@ import {
   ISpotifyPlaylist,
   ISpotifyTrack,
 } from './types'
+import { TSearchTypes } from '../../search/types'
 
 export class SpotifyService {
   accessToken: string
+  baseUrl = 'https://api.spotify.com/v1'
 
   constructor() {
     this.storeAccessToken()
@@ -52,7 +54,6 @@ export class SpotifyService {
       return await fn()
     } catch (error) {
       const axiosError = error as AxiosError
-
       if (axiosError.response?.status === 404) {
         return [] as T
       }
@@ -118,6 +119,27 @@ export class SpotifyService {
     })
   }
 
+  mapRawTracksToSpotifyTracks(rawTracks: IRawSpotifyTrackItem[]) {
+    return rawTracks.map(({ primary_color, track }) => ({
+      primaryColor: primary_color,
+      artists: track?.artists.map(({ id, name }) => ({
+        externalId: id,
+        name,
+      })),
+      duration: track?.duration_ms,
+      externalId: track?.id,
+      name: track?.name,
+      album: {
+        externalId: track?.album?.id,
+        name: track?.album?.name,
+        releaseDate: track?.album?.release_date,
+        image: track?.album.images?.[0]?.url,
+        tracks: track?.album?.total_tracks,
+      },
+      image: track?.album?.images?.[0]?.url,
+    }))
+  }
+
   async getPlaylistTracks(playlistId: string): Promise<ISpotifyTrack[]> {
     return this.errorWrapper(async () => {
       const { data } = await axios.get(
@@ -133,24 +155,27 @@ export class SpotifyService {
         data.items as IRawSpotifyTrackItem[]
       ).filter(({ track }) => !!track?.album?.id && !!track?.album?.name)
 
-      return rawTracks.map(({ primary_color, track }) => ({
-        primaryColor: primary_color,
-        artists: track?.artists.map(({ id, name }) => ({
-          externalId: id,
-          name,
-        })),
-        duration: track?.duration_ms,
-        externalId: track?.id,
-        name: track?.name,
-        album: {
-          externalId: track?.album?.id,
-          name: track?.album?.name,
-          releaseDate: track?.album?.release_date,
-          image: track?.album.images?.[0]?.url,
-          tracks: track?.album?.total_tracks,
+      return this.mapRawTracksToSpotifyTracks(rawTracks)
+    })
+  }
+
+  async search(query: string, type: TSearchTypes) {
+    return this.errorWrapper(async () => {
+      const { data } = await axios.get('https://api.spotify.com/v1/search', {
+        headers: {
+          Authorization: `Bearer ${this.accessToken}`,
         },
-        image: track?.album?.images?.[0]?.url,
-      }))
+        params: {
+          q: query,
+          type,
+        },
+      })
+
+      const rawTracks = data.tracks?.items.map(
+        (track: IRawSpotifyTrackItem) => ({ track }),
+      )
+
+      return this.mapRawTracksToSpotifyTracks(rawTracks)
     })
   }
 }
