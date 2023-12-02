@@ -6,6 +6,7 @@ import {
   useMusicPlayerSeekTime,
 } from '@/hooks'
 import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useNavigationMusicPlayer } from './useNavigationMusicPlayer'
 
 export const useMusicPlayer = () => {
   const [currentTime, setCurrentTime] = useState(0)
@@ -50,6 +51,25 @@ export const useMusicPlayer = () => {
     audioElement?.pause()
   }, [audioContext, audioElement, setIsPlaying])
 
+  const resetTrackTime = useCallback(() => {
+    if (!audioElement) {
+      return
+    }
+
+    setSeekTime(0)
+    setCurrentTime(0)
+    audioElement.currentTime = 0
+  }, [audioElement, setSeekTime])
+
+  const onPreviousTrack = useCallback(() => {
+    if (currentTime > 10) {
+      resetTrackTime()
+      return
+    }
+
+    // TODO: Implement this
+  }, [currentTime, resetTrackTime])
+
   const onToggle = useCallback(() => {
     if (isPlaying) {
       onPause()
@@ -90,8 +110,7 @@ export const useMusicPlayer = () => {
 
     const onEnded = () => {
       onPause()
-      setSeekTime(0)
-      setCurrentTime(0)
+      resetTrackTime()
     }
 
     audioElement.src = src
@@ -113,7 +132,15 @@ export const useMusicPlayer = () => {
       audioElement.removeEventListener('loadeddata', onPlay)
       audioElement.removeEventListener('ended', onEnded)
     }
-  }, [audioElement, onPause, onPlay, seekTime, setSeekTime, src])
+  }, [
+    audioElement,
+    onPause,
+    onPlay,
+    resetTrackTime,
+    seekTime,
+    setSeekTime,
+    src,
+  ])
 
   // Setup audio context
   // More info: https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API/Using_Web_Audio_API
@@ -140,6 +167,8 @@ export const useMusicPlayer = () => {
     }
   }, [audioElement?.currentTime, setIsPlaying, setSeekTime])
 
+  useNavigationMusicPlayer({ onPlay, onPause, seekTo, onPreviousTrack })
+
   return {
     onPlay,
     onPause,
@@ -151,5 +180,6 @@ export const useMusicPlayer = () => {
     isMiniPlayerVisible,
     setIsMiniPlayerVisible,
     toggleMiniPlayer,
+    onPreviousTrack,
   }
 }
