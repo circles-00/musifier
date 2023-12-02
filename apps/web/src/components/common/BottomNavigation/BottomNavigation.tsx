@@ -5,7 +5,6 @@ import {
   MusicalNoteIcon as LibraryIcon,
 } from '@heroicons/react/24/solid'
 import { uniqueId } from 'lodash'
-import { useRouter } from 'next/router'
 import { useCallback, useMemo } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 
