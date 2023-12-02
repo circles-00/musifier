@@ -5,4 +5,5 @@ export type TTrackType = 'playlist' | 'search'
 export interface ITracksList {
   tracks: ITrack[]
   type?: TTrackType
+  cacheTrack?: boolean
 }

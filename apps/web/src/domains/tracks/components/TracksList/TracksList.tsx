@@ -9,18 +9,22 @@ const TrackComponent = dynamic(
   { ssr: false },
 )
 
-export const TracksList = ({ tracks, type = 'playlist' }: ITracksList) => {
+export const TracksList = ({
+  tracks,
+  type = 'playlist',
+  cacheTrack = false,
+}: ITracksList) => {
   const { onAddSearchResult, onRemoveSearchResult } = useCacheSearchResults()
 
   const handleAddSearchResult = useCallback(
     (searchResult: ISearchResult) => {
-      if (type === 'search') {
+      if (!cacheTrack) {
         return
       }
 
       onAddSearchResult(searchResult)
     },
-    [onAddSearchResult, type],
+    [cacheTrack, onAddSearchResult],
   )
 
   const handleRemoveSearchResult = useCallback(

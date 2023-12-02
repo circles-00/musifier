@@ -102,7 +102,7 @@ const SearchPage = () => {
           ))}
         </div>
         {data && data?.length > 0 ? (
-          <TracksList tracks={data} />
+          <TracksList cacheTrack tracks={data} />
         ) : searchResults.length > 0 && !isLoading ? (
           <TracksList
             type="search"
