@@ -23,3 +23,12 @@ export const streamTrack = createApiHandler(
   },
   (id: number) => ['stream_track', id],
 )
+
+export const removeTrackFromCache = createApiHandler(
+  async (id: number) => {
+    const { data } = await axios.delete(`/server/stream?id=${id}`)
+
+    return data
+  },
+  ['remove_track_from_cache'],
+)

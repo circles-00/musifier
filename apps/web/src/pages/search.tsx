@@ -1,8 +1,10 @@
 import { Avatar } from '@/components'
-import { TracksList } from '@/domains/tracks/components/TracksList/TracksList'
+import { useCacheSearchResults } from '@/domains/search'
+import { TracksList } from '@/domains/tracks/components/TracksList'
 import { FormInput } from '@/form-fields'
 import { useDebounce } from '@/hooks'
 import { DataService } from '@/services'
+import { ITrack } from '@/services/data-service'
 import { TSearchTypes } from '@/services/data-service/search/types'
 import { formResolver } from '@/utils'
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline'
@@ -56,7 +58,7 @@ const SearchPage = () => {
 
   const [selectedTypeFilter, setSelectedTypeFilter] = useState(typesFilters[0])
 
-  const { data } = useQuery({
+  const { data, isLoading } = useQuery({
     queryFn: () =>
       DataService.search({
         query: debouncedSearchValue,
@@ -67,8 +69,8 @@ const SearchPage = () => {
       type: selectedTypeFilter.type as TSearchTypes,
     }),
     keepPreviousData: true,
-    enabled: debouncedSearchValue.length > 0,
   })
+  const { searchResults } = useCacheSearchResults()
 
   return (
     <FormProvider {...methods}>
@@ -101,6 +103,13 @@ const SearchPage = () => {
         </div>
         {data && data?.length > 0 ? (
           <TracksList tracks={data} />
+        ) : searchResults.length > 0 && !isLoading ? (
+          <TracksList
+            type="search"
+            tracks={
+              searchResults?.map(({ content }) => content as ITrack) ?? []
+            }
+          />
         ) : (
           <div className="mt-64 flex items-center justify-center">
             <p className="text-2xl">Start typing...</p>

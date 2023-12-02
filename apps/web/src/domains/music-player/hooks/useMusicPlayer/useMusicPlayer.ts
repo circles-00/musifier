@@ -5,6 +5,8 @@ import {
   useMusicPlayerCurrentTrackId,
   useMusicPlayerSeekTime,
 } from '@/hooks'
+import { DataService } from '@/services'
+import { useMutation } from '@tanstack/react-query'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useNavigationMusicPlayer } from './useNavigationMusicPlayer'
 
@@ -23,6 +25,14 @@ export const useMusicPlayer = () => {
     [currentTrackId],
   )
 
+  const {
+    mutate: removeTrackFromCache,
+    reset: resetRemoveTrackFromCacheMutation,
+  } = useMutation({
+    mutationFn: DataService.removeTrackFromCache,
+    mutationKey: DataService.removeTrackFromCache.queryKey,
+  })
+
   const audioElement = useMemo(() => {
     if (!isBrowser) {
       return null
@@ -39,8 +49,21 @@ export const useMusicPlayer = () => {
     }
 
     setIsPlaying(true)
-    audioElement?.play()
-  }, [audioContext, audioElement, setIsPlaying])
+    audioElement?.play().catch(() => {
+      if (!currentTrackId) {
+        return
+      }
+
+      removeTrackFromCache(currentTrackId)
+      resetRemoveTrackFromCacheMutation()
+    })
+  }, [
+    audioContext,
+    audioElement,
+    currentTrackId,
+    removeTrackFromCache,
+    resetRemoveTrackFromCacheMutation,
+  ])
 
   const onPause = useCallback(() => {
     if (audioContext?.state === 'suspended') {

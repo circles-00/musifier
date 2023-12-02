@@ -6,6 +6,7 @@ import {
   param,
   Response,
   RestBindings,
+  del,
 } from '@loopback/rest'
 import { STREAM_SERVICE } from '../keys'
 import { StreamService } from '../services'
@@ -16,7 +17,7 @@ export class StreamController {
     @inject(STREAM_SERVICE) private readonly streamService: StreamService,
 
     @inject(RestBindings.Http.RESPONSE) private readonly response: Response,
-  ) {}
+  ) { }
 
   @get('/{id}')
   async streamTrack(@param.path.number('id') trackId: number) {
@@ -41,5 +42,12 @@ export class StreamController {
     this.response.setHeader('X-Accel-Buffering', 'no')
 
     return trackResult.track.pipe(this.response)
+  }
+
+  @del('/')
+  async deleteTrackFromCache(@param.query.number('id') trackId: number) {
+    const trackResult = await this.streamService.removeTrackFromCache(trackId)
+
+    return trackResult
   }
 }

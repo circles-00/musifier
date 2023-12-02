@@ -69,13 +69,15 @@ export class StreamService {
       throw new HttpErrors.BadRequest('Track not found')
     }
 
-    if (!trackFromDb.cacheKey) {
+    const cacheExists = this.checkIfCacheExists(trackFromDb.cacheKey)
+
+    if (!trackFromDb.cacheKey || !cacheExists) {
       throw new HttpErrors.BadRequest('Track not cached')
     }
 
     unlinkSync(join(this.cachePath, trackFromDb.cacheKey))
 
-    return await this.trackRepository.update(trackId, { cacheKey: undefined })
+    await this.trackRepository.update(trackId, { cacheKey: undefined })
   }
 
   checkIfCacheExists(trackName: string | null) {

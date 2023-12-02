@@ -3,4 +3,5 @@ export interface ITrack {
   image: string
   artist: string
   id: number
+  onClick?: () => void
 }

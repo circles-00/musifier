@@ -5,15 +5,19 @@ import Image from 'next/image'
 import { FC, useCallback } from 'react'
 import { ITrack } from './types'
 
-export const Track: FC<ITrack> = ({ image, title, artist, id }) => {
+export const Track: FC<ITrack> = ({ image, title, artist, id, onClick }) => {
   const { loadNewTrack } = useMusicPlayerContext()
 
   const loadTrackToMusicPlayer = useCallback(() => {
     loadNewTrack(id)
-  }, [id, loadNewTrack])
+    onClick?.()
+  }, [id, loadNewTrack, onClick])
 
   return (
-    <button className="flex gap-5 text-start" onClick={loadTrackToMusicPlayer}>
+    <button
+      className="flex w-full gap-5 text-start"
+      onClick={loadTrackToMusicPlayer}
+    >
       {!isEmpty(image) && (
         <Image
           src={image ?? ''}
