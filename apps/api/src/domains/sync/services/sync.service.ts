@@ -114,13 +114,12 @@ export class SyncService {
 
         if (!trackFromDb) {
           return await this.trackRepository.save(track)
-        } else {
-          trackFromDb.image = track.image
-
-          return await this.trackRepository.save(trackFromDb)
         }
 
-        return trackFromDb
+        // TODO: Add more fields if needed
+        trackFromDb.image = track.image
+
+        return await this.trackRepository.save(trackFromDb)
       }),
     )
   }
