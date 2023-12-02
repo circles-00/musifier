@@ -1,5 +1,6 @@
 export * from './categories'
 export * from './playlists'
+export * from './search'
 export * from './tracks'
 export * from './types'
 export * from './utils'

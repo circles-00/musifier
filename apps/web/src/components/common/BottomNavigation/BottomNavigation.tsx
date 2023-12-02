@@ -35,6 +35,10 @@ export const BottomNavigation = () => {
     (route: string) => {
       const currentRoute = router.pathname
 
+      if (route === '/') {
+        return route === currentRoute
+      }
+
       return currentRoute.includes(route)
     },
     [router.pathname],

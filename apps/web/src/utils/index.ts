@@ -1,4 +1,5 @@
 export * from './convert-ms-to-s'
+export * from './form'
 export * from './get-first-letter-capitalized'
 export * from './get-minutes-seconds-from-ms'
 export * from './get-time-of-day'

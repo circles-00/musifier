@@ -9,9 +9,13 @@ export class SearchService {
     private readonly spotifyService: SpotifyService,
     @inject(SYNC_SERVICE)
     private readonly syncService: SyncService,
-  ) {}
+  ) { }
 
   async search(query: string, type: TSearchTypes) {
+    if (!query) {
+      return []
+    }
+
     const spotifyTracks = await this.spotifyService.search(query, type)
 
     return await this.syncService.syncTracks(spotifyTracks)

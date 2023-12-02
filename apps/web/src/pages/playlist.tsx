@@ -2,7 +2,8 @@ import { DataService } from '@/services'
 import { useQuery } from '@tanstack/react-query'
 import { useRouter } from 'next/router'
 import { useEffect, useMemo } from 'react'
-import { PlaylistHeader, Track } from '@/domains/playlist'
+import { PlaylistHeader } from '@/domains/playlist'
+import { TracksList } from '@/domains/tracks/components/TracksList/TracksList'
 
 const PlaylistPage = () => {
   const router = useRouter()
@@ -38,19 +39,7 @@ const PlaylistPage = () => {
         featuredArtists={featuredArtists}
         image={data?.image}
       />
-      <div className="mt-5 flex flex-col gap-4">
-        {data?.tracksList?.map(
-          ({ id: trackId, name: title, image, artists }) => (
-            <Track
-              key={trackId}
-              id={trackId}
-              title={title}
-              image={image}
-              artist={artists?.map(({ name }) => name)?.join(', ')}
-            />
-          ),
-        )}
-      </div>
+      <TracksList tracks={data?.tracksList ?? []} />
     </div>
   )
 }

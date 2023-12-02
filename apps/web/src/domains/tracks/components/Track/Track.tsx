@@ -14,7 +14,7 @@ export const Track: FC<ITrack> = ({ image, title, artist, id }) => {
   return (
     <button className="flex gap-5 text-start" onClick={loadTrackToMusicPlayer}>
       <Image
-        src={image}
+        src={image ?? ''}
         alt={title}
         width={55}
         height={55}
