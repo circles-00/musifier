@@ -66,6 +66,7 @@ const SearchPage = () => {
       query: debouncedSearchValue,
       type: selectedTypeFilter.type as TSearchTypes,
     }),
+    keepPreviousData: true,
     enabled: debouncedSearchValue.length > 0,
   })
 
@@ -86,11 +87,10 @@ const SearchPage = () => {
             <button
               disabled={disabled}
               key={type}
-              className={`rounded-md border border-gray-300 px-2 py-2 ${
-                selectedTypeFilter?.type === type
+              className={`rounded-md border border-gray-300 px-2 py-2 ${selectedTypeFilter?.type === type
                   ? 'border-none bg-sky-500'
                   : 'bg-none'
-              } ${disabled ? 'opacity-50' : ''}
+                } ${disabled ? 'opacity-50' : ''}
               }`}
               onClick={() => setSelectedTypeFilter({ name, type })}
             >
