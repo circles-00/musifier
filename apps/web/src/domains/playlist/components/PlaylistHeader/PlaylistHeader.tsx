@@ -2,6 +2,7 @@ import { FC } from 'react'
 import { IPlaylistHeader } from './types'
 import Image from 'next/image'
 import { LABELS } from './utils'
+import { isEmpty } from 'lodash'
 
 export const PlaylistHeader: FC<IPlaylistHeader> = ({
   featuredArtists,
@@ -10,7 +11,9 @@ export const PlaylistHeader: FC<IPlaylistHeader> = ({
 }) => (
   <div className="flex flex-col gap-4">
     <div className="mt-3 flex flex-col items-center gap-4">
-      <Image src={image ?? ''} width={270} height={270} alt={''} priority />
+      {!isEmpty(image) && (
+        <Image src={image ?? ''} width={270} height={270} alt={''} priority />
+      )}
       {featuredArtists && (
         <p className="self-start text-start text-gray-300">
           {`${featuredArtists} ${LABELS.andMore}`}
