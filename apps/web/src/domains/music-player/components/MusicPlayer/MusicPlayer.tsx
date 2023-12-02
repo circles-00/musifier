@@ -18,13 +18,13 @@ export const MusicPlayer = () => {
     enabled: !!currentTrackId,
   })
 
-  const { toggleMiniPlayer } = useMusicPlayerContext()
+  const { toggleMiniPlayer, setIsMiniPlayerVisible } = useMusicPlayerContext()
 
   useEffect(() => {
     router.events.on('routeChangeComplete', () => {
-      toggleMiniPlayer()
+      setIsMiniPlayerVisible(false)
     })
-  }, [router.events, toggleMiniPlayer])
+  }, [router.events, setIsMiniPlayerVisible, toggleMiniPlayer])
 
   return (
     <div className="flex flex-col">
