@@ -2,11 +2,11 @@ import { useMusicPlayerCurrentTrackId } from '@/hooks'
 import { DataService } from '@/services'
 import { ChevronDownIcon } from '@heroicons/react/24/solid'
 import { useQuery } from '@tanstack/react-query'
-import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import { useMusicPlayerContext } from '../../hooks'
 import { MusicPlayerControls } from './components/MusicPlayerControls/MusicPlayerControls'
+import { Image } from '@/components'
 
 export const MusicPlayer = () => {
   const location = useLocation()

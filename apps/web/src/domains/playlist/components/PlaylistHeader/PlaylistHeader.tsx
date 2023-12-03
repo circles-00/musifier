@@ -1,8 +1,8 @@
 import { FC } from 'react'
 import { IPlaylistHeader } from './types'
-import Image from 'next/image'
 import { LABELS } from './utils'
 import { isEmpty } from 'lodash'
+import { Image } from '@/components'
 
 export const PlaylistHeader: FC<IPlaylistHeader> = ({
   featuredArtists,

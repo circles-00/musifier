@@ -1,6 +1,7 @@
 export * from './Avatar'
 export * from './BottomNavigation'
 export * from './FillImage'
+export * from './Image'
 export * from './Input'
 export * from './ProgressBar'
 export * from './Slider'

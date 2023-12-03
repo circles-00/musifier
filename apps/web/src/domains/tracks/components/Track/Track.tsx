@@ -1,9 +1,9 @@
 import { useMusicPlayerContext } from '@/domains/music-player'
 import { stringMaxChars } from '@/utils'
 import { isEmpty } from 'lodash'
-import Image from 'next/image'
 import { FC, useCallback } from 'react'
 import { ITrack } from './types'
+import { Image } from '@/components'
 
 export const Track: FC<ITrack> = ({ image, title, artist, id, onClick }) => {
   const { loadNewTrack } = useMusicPlayerContext()
