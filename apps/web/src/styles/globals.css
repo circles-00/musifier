@@ -7,6 +7,26 @@ body {
   overscroll-behavior-y: contain;
 }
 
+/* This makes the button behave like native on mobile when pressed */
+button {
+  transition: all 0.2s ease-in-out;
+}
+
+button:active {
+  transform: scale(0.92);
+  transition: 0.2s;
+  opacity: 0.5;
+}
+
+/* This will remove the background highlight color on these elements on mobile */
+input,
+textarea,
+button,
+select,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
 p,
 h1,
 h2,

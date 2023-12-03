@@ -15,7 +15,10 @@ export const Card: FC<ICard> = ({ image, title, caption, playlistId }) => {
   }, [navigate, playlistId])
 
   return (
-    <button className="flex flex-col gap-4" onClick={onNavigate}>
+    <button
+      className="flex flex-col gap-4 active:bg-transparent"
+      onClick={onNavigate}
+    >
       <div className="relative h-44 w-44">
         <FillImage src={image} alt={title} />
       </div>
