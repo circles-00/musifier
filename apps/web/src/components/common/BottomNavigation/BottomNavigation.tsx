@@ -6,10 +6,11 @@ import {
   MusicalNoteIcon as LibraryIcon,
 } from '@heroicons/react/24/solid'
 import { uniqueId } from 'lodash'
-import { useCallback, useMemo } from 'react'
+import { useCallback, useMemo, useTransition } from 'react'
 import { useLocation } from 'react-router-dom'
 
 export const BottomNavigation = () => {
+  const [, startTransition] = useTransition()
   const navigate = useReactRouterNavigate()
   const location = useLocation()
 
@@ -59,7 +60,9 @@ export const BottomNavigation = () => {
         {navigationItems.map(({ name, icon: Icon, route }) => (
           <button
             onClick={() => {
-              navigate(route)
+              startTransition(() => {
+                navigate(route)
+              })
             }}
             key={uniqueId()}
           >
