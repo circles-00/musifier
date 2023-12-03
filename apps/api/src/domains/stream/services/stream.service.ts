@@ -21,7 +21,7 @@ export class StreamService {
     @typeorm.repository(Track)
     private readonly trackRepository: Repository<Track>,
     private readonly ytSearch = new Youtube.Scraper(),
-  ) { }
+  ) {}
 
   async searchTrackOnYoutube(trackName: string) {
     const { videos } = await this.ytSearch.search(trackName)
