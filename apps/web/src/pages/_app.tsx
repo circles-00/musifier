@@ -25,8 +25,8 @@ const routes = [
 
 export default function App({ pageProps }: AppProps) {
   return (
-    <RootProvider>
-      <MemoryRouter initialEntries={['/']}>
+    <MemoryRouter initialEntries={['/']}>
+      <RootProvider>
         <AppLayout>
           <MusicPlayerRenderer>
             <Routes>
@@ -36,7 +36,7 @@ export default function App({ pageProps }: AppProps) {
             </Routes>
           </MusicPlayerRenderer>
         </AppLayout>
-      </MemoryRouter>
-    </RootProvider>
+      </RootProvider>
+    </MemoryRouter>
   )
 }

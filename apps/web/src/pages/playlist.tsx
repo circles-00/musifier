@@ -3,14 +3,15 @@ import { useQuery } from '@tanstack/react-query'
 import { useEffect, useMemo } from 'react'
 import { PlaylistHeader } from '@/domains/playlist'
 import { TracksList } from '@/domains/tracks/components/TracksList/TracksList'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
+import { useReactRouterNavigate } from '@/hooks'
 
 const PlaylistPage = () => {
   const location = useLocation()
   const id = location.state?.id
   const parsedId = Number.parseInt(id as string)
 
-  const navigate = useNavigate()
+  const navigate = useReactRouterNavigate()
   const { data } = useQuery({
     queryFn: () => DataService.getOnePlaylist(parsedId),
     queryKey: DataService.getOnePlaylist.queryKey(parsedId),

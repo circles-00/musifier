@@ -2,10 +2,10 @@ import { FC, useCallback } from 'react'
 import { ICard } from './types'
 import { FillImage } from '@/components/common'
 import { stringMaxChars, stripHtmlTags } from '@/utils'
-import { useNavigate } from 'react-router-dom'
+import { useReactRouterNavigate } from '@/hooks'
 
 export const Card: FC<ICard> = ({ image, title, caption, playlistId }) => {
-  const navigate = useNavigate()
+  const navigate = useReactRouterNavigate()
   const onNavigate = useCallback(() => {
     if (!playlistId) {
       return
