@@ -51,7 +51,7 @@ export const MiniMusicPlayer = () => {
             width={40}
             height={40}
           />
-          <div className="flex flex-col">
+          <div className="flex flex-col items-start">
             <p className="">{stringMaxChars(data?.name, 25)}</p>
             <p className="text-sm text-gray-200">
               {stringMaxChars(
