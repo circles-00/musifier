@@ -1,4 +1,5 @@
 export * from './useAudioContext'
+export * from './useBlockBackButtonExit'
 export * from './useDebounce'
 export * from './useIsBrowser'
 export * from './usePagination'
