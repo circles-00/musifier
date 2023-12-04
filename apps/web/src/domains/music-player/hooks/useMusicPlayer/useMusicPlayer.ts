@@ -8,12 +8,15 @@ import {
 import { DataService } from '@/services'
 import { useMutation } from '@tanstack/react-query'
 import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useMusicPlayerQueue } from './useMusicPlayerQueue'
 import { useNavigationMusicPlayer } from './useNavigationMusicPlayer'
 
 export const useMusicPlayer = () => {
   const [currentTime, setCurrentTime] = useState(0)
   const [isPlaying, setIsPlaying] = useState(false)
   const [isMiniPlayerVisible, setIsMiniPlayerVisible] = useState(true)
+
+  const [errorRetries, setErrorRetries] = useState(0)
 
   const seekTime = useMusicPlayerSeekTime()
   const currentTrackId = useMusicPlayerCurrentTrackId()
@@ -24,6 +27,9 @@ export const useMusicPlayer = () => {
     () => `/server/stream/${currentTrackId}`,
     [currentTrackId],
   )
+
+  const { getNextTrack, getPreviousTrack, ...queueMethods } =
+    useMusicPlayerQueue()
 
   const {
     mutate: removeTrackFromCache,
@@ -49,20 +55,30 @@ export const useMusicPlayer = () => {
     }
 
     setIsPlaying(true)
-    audioElement?.play().catch(() => {
-      if (!currentTrackId) {
-        return
-      }
+    audioElement
+      ?.play()
+      .then(() => setErrorRetries(0))
+      .catch(() => {
+        if (!currentTrackId) {
+          return
+        }
 
-      // Note: This removes the track from the cache if it fails to play,
-      // which means the file is corrupted, so with this we can remove it from the cache and try again
-      removeTrackFromCache(currentTrackId)
-      resetRemoveTrackFromCacheMutation()
-    })
+        // Note: This is not tested
+        if (errorRetries < 3) {
+          setErrorRetries((retries) => retries + 1)
+          return
+        }
+
+        // Note: This removes the track from the cache if it fails to play,
+        // which means the file is corrupted, so with this we can remove it from the cache and try again
+        removeTrackFromCache(currentTrackId)
+        resetRemoveTrackFromCacheMutation()
+      })
   }, [
     audioContext,
     audioElement,
     currentTrackId,
+    errorRetries,
     removeTrackFromCache,
     resetRemoveTrackFromCacheMutation,
   ])
@@ -86,14 +102,41 @@ export const useMusicPlayer = () => {
     audioElement.currentTime = 0
   }, [audioElement, setSeekTime])
 
-  const onPreviousTrack = useCallback(() => {
-    if (currentTime > 10) {
+  const loadNewTrack = useCallback(
+    (id: number) => {
       resetTrackTime()
+      onPlay()
+
+      if (currentTrackId === id) {
+        return setCurrentTrackId(undefined)
+      }
+
+      setCurrentTrackId(id)
+    },
+    [currentTrackId, onPlay, resetTrackTime, setCurrentTrackId],
+  )
+
+  const onPreviousTrack = useCallback(() => {
+    const previousTrackId = getPreviousTrack()
+
+    if (!previousTrackId) {
       return
     }
 
+    loadNewTrack(previousTrackId)
+
     // TODO: Implement this
-  }, [currentTime, resetTrackTime])
+  }, [getPreviousTrack, loadNewTrack])
+
+  const onNextTrack = useCallback(() => {
+    const nextTrackId = getNextTrack()
+
+    if (!nextTrackId) {
+      return
+    }
+
+    loadNewTrack(nextTrackId)
+  }, [getNextTrack, loadNewTrack])
 
   const onToggle = useCallback(() => {
     if (isPlaying) {
@@ -103,14 +146,6 @@ export const useMusicPlayer = () => {
 
     onPlay()
   }, [isPlaying, onPlay, onPause])
-
-  const loadNewTrack = useCallback(
-    (id: number) => {
-      setCurrentTrackId(id)
-      setSeekTime(0)
-    },
-    [setCurrentTrackId, setSeekTime],
-  )
 
   const seekTo = useCallback(
     (seconds: number) => {
@@ -136,6 +171,9 @@ export const useMusicPlayer = () => {
     const onEnded = () => {
       onPause()
       resetTrackTime()
+
+      // TODO: This will need to be changed when we implement shuffle & repeat
+      onNextTrack()
     }
 
     audioElement.src = src
@@ -159,6 +197,7 @@ export const useMusicPlayer = () => {
     }
   }, [
     audioElement,
+    onNextTrack,
     onPause,
     onPlay,
     resetTrackTime,
@@ -206,5 +245,7 @@ export const useMusicPlayer = () => {
     setIsMiniPlayerVisible,
     toggleMiniPlayer,
     onPreviousTrack,
+    onNextTrack,
+    ...queueMethods,
   }
 }

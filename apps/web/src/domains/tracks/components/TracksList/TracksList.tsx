@@ -13,21 +13,24 @@ export const TracksList = ({
   tracks,
   type = 'playlist',
   cacheTrack = false,
+  onTrackClick,
 }: ITracksList) => {
   const { onAddSearchResult, onRemoveSearchResult } = useCacheSearchResults()
 
-  const handleAddSearchResult = useCallback(
+  const onClick = useCallback(
     (searchResult: ISearchResult) => {
+      onTrackClick?.(searchResult)
+
       if (!cacheTrack) {
         return
       }
 
       onAddSearchResult(searchResult)
     },
-    [cacheTrack, onAddSearchResult],
+    [cacheTrack, onAddSearchResult, onTrackClick],
   )
 
-  const handleRemoveSearchResult = useCallback(
+  const onDelete = useCallback(
     (idx: number) => {
       if (type !== 'search') {
         return
@@ -45,7 +48,7 @@ export const TracksList = ({
           <TrackComponent
             type={type}
             onClick={() =>
-              handleAddSearchResult({
+              onClick({
                 type: 'track',
                 content: {
                   id: trackId,
@@ -56,7 +59,7 @@ export const TracksList = ({
                 },
               })
             }
-            onDelete={() => handleRemoveSearchResult(idx)}
+            onDelete={() => onDelete(idx)}
             key={trackId}
             id={trackId}
             title={title}

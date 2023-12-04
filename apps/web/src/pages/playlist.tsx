@@ -1,10 +1,11 @@
 import { DataService } from '@/services'
 import { useQuery } from '@tanstack/react-query'
-import { useEffect, useMemo } from 'react'
+import { useCallback, useEffect, useMemo } from 'react'
 import { PlaylistHeader } from '@/domains/playlist'
 import { TracksList } from '@/domains/tracks/components/TracksList/TracksList'
 import { useLocation } from 'react-router-dom'
 import { useReactRouterNavigate } from '@/hooks'
+import { useMusicPlayerContext } from '@/domains/music-player'
 
 const PlaylistPage = () => {
   const location = useLocation()
@@ -34,6 +35,12 @@ const PlaylistPage = () => {
     [data?.tracksList],
   )
 
+  const { initializeQueue } = useMusicPlayerContext()
+
+  const onTrackClick = useCallback(() => {
+    initializeQueue(data?.tracksList.map(({ id: trackId }) => trackId) ?? [])
+  }, [data?.tracksList, initializeQueue])
+
   return (
     <div className="pb-5">
       <PlaylistHeader
@@ -41,7 +48,7 @@ const PlaylistPage = () => {
         featuredArtists={featuredArtists}
         image={data?.image}
       />
-      <TracksList tracks={data?.tracksList ?? []} />
+      <TracksList tracks={data?.tracksList ?? []} onTrackClick={onTrackClick} />
     </div>
   )
 }

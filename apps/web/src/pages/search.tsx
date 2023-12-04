@@ -1,4 +1,5 @@
 import { Avatar } from '@/components'
+import { useMusicPlayerContext } from '@/domains/music-player'
 import { useCacheSearchResults } from '@/domains/search'
 import { TracksList } from '@/domains/tracks/components/TracksList'
 import { FormInput } from '@/form-fields'
@@ -6,10 +7,11 @@ import { useDebounce } from '@/hooks'
 import { DataService } from '@/services'
 import { ITrack } from '@/services/data-service'
 import { TSearchTypes } from '@/services/data-service/search/types'
+import { ISearchResult } from '@/store/search'
 import { formResolver } from '@/utils'
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline'
 import { useQuery } from '@tanstack/react-query'
-import { useMemo, useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import { FormProvider, useForm, useWatch } from 'react-hook-form'
 import { z } from 'zod'
 
@@ -71,6 +73,14 @@ const SearchPage = () => {
     keepPreviousData: true,
   })
   const { searchResults } = useCacheSearchResults()
+  const { initializeQueue } = useMusicPlayerContext()
+
+  const onTrackClick = useCallback(
+    (searchResult: ISearchResult) => {
+      initializeQueue([searchResult.content.id])
+    },
+    [initializeQueue],
+  )
 
   return (
     <FormProvider {...methods}>
@@ -102,10 +112,11 @@ const SearchPage = () => {
           ))}
         </div>
         {data && data?.length > 0 ? (
-          <TracksList cacheTrack tracks={data} />
+          <TracksList cacheTrack tracks={data} onTrackClick={onTrackClick} />
         ) : searchResults.length > 0 && !isLoading ? (
           <TracksList
             type="search"
+            onTrackClick={onTrackClick}
             tracks={
               searchResults?.map(({ content }) => content as ITrack) ?? []
             }

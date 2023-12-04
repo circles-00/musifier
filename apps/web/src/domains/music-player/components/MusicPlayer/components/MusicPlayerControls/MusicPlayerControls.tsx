@@ -24,6 +24,8 @@ export const MusicPlayerControls = () => {
     onToggle: onToggleMusicPlayer,
     currentTime,
     seekTo,
+    onPreviousTrack,
+    onNextTrack,
   } = useMusicPlayerContext()
 
   return (
@@ -42,20 +44,20 @@ export const MusicPlayerControls = () => {
         </div>
       </div>
 
-      <div className="flex gap-4 justify-center">
+      <div className="flex justify-center gap-4">
         {/* TODO: Change icons, they look terrible */}
-        <button>
-          <BackwardIcon className="w-20 h-20" />
+        <button onClick={onPreviousTrack}>
+          <BackwardIcon className="h-20 w-20" />
         </button>
         <button onClick={onToggleMusicPlayer}>
           {isPlaying ? (
-            <PauseCircleIcon className="w-20 h-20" />
+            <PauseCircleIcon className="h-20 w-20" />
           ) : (
-            <PlayCircleIcon className="w-20 h-20" />
+            <PlayCircleIcon className="h-20 w-20" />
           )}
         </button>
-        <button>
-          <ForwardIcon className="w-20 h-20" />
+        <button onClick={onNextTrack}>
+          <ForwardIcon className="h-20 w-20" />
         </button>
       </div>
     </>

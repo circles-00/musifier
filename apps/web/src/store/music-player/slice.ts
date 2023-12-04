@@ -9,14 +9,19 @@ export const createMusicPlayerSlice: StateCreator<
   TMusicPlayerSlice
 > = (set) => ({
   seekTime: 0,
+  queue: [],
   musicPlayerActions: {
-    setCurrentTrackId: (trackId: number) =>
+    setCurrentTrackId: (trackId?: number) =>
       set((state) => {
         state.currentTrackId = trackId
       }),
     setSeekTime: (seekTime: number) =>
       set((state) => {
         state.seekTime = seekTime
+      }),
+    setQueue: (queue: number[]) =>
+      set((state) => {
+        state.queue = queue
       }),
   },
 })
