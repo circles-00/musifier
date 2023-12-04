@@ -16,8 +16,6 @@ export const useMusicPlayer = () => {
   const [isPlaying, setIsPlaying] = useState(false)
   const [isMiniPlayerVisible, setIsMiniPlayerVisible] = useState(true)
 
-  const [errorRetries, setErrorRetries] = useState(0)
-
   const seekTime = useMusicPlayerSeekTime()
   const currentTrackId = useMusicPlayerCurrentTrackId()
 
@@ -55,30 +53,20 @@ export const useMusicPlayer = () => {
     }
 
     setIsPlaying(true)
-    audioElement
-      ?.play()
-      .then(() => setErrorRetries(0))
-      .catch(() => {
-        if (!currentTrackId) {
-          return
-        }
+    audioElement?.play().catch(() => {
+      if (!currentTrackId) {
+        return
+      }
 
-        // Note: This is not tested
-        if (errorRetries < 3) {
-          setErrorRetries((retries) => retries + 1)
-          return
-        }
-
-        // Note: This removes the track from the cache if it fails to play,
-        // which means the file is corrupted, so with this we can remove it from the cache and try again
-        removeTrackFromCache(currentTrackId)
-        resetRemoveTrackFromCacheMutation()
-      })
+      // Note: This removes the track from the cache if it fails to play,
+      // which means the file is corrupted, so with this we can remove it from the cache and try again
+      removeTrackFromCache(currentTrackId)
+      resetRemoveTrackFromCacheMutation()
+    })
   }, [
     audioContext,
     audioElement,
     currentTrackId,
-    errorRetries,
     removeTrackFromCache,
     resetRemoveTrackFromCacheMutation,
   ])
