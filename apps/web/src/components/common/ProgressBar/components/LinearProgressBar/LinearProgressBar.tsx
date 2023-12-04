@@ -6,7 +6,7 @@ export const LinearProgressBar: FC<ILinearProgressBar> = ({
   progress,
   className = '',
 }) => {
-  const defaultClassName = 'bg-white py-1'
+  const defaultClassName = 'bg-white py-[2px]'
 
   return (
     <div

@@ -55,7 +55,7 @@ export const BottomNavigation = () => {
   }
 
   return (
-    <div className="fixed bottom-0 left-0 z-10 h-16 w-full bg-black bg-opacity-80">
+    <div className="fixed bottom-0 left-0 z-10 h-24 w-full bg-black bg-opacity-80">
       <div className="flex h-full items-center justify-evenly">
         {navigationItems.map(({ name, icon: Icon, route }) => (
           <button
@@ -66,9 +66,9 @@ export const BottomNavigation = () => {
             }}
             key={uniqueId()}
           >
-            <div className="flex flex-col items-center justify-center gap-1">
+            <div className="flex flex-col items-center justify-center gap-1 pt-8">
               <Icon
-                className={`h-6 w-6 ${
+                className={`h-8 w-8 ${
                   isActiveRoute(route) ? 'fill-sky-500' : ''
                 }`}
               />
