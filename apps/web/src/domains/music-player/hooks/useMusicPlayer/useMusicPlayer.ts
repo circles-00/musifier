@@ -38,7 +38,7 @@ export const useMusicPlayer = () => {
       return null
     }
 
-    return document.createElement('audio')
+    return new Audio()
   }, [isBrowser])
 
   const { audioContext } = useAudioContext()
