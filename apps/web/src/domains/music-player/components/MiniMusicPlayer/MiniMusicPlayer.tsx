@@ -39,8 +39,9 @@ export const MiniMusicPlayer = () => {
   }
 
   return (
-    <button
-      className="fixed bottom-16 left-4 z-10 w-11/12 bg-red-600 active:opacity-95"
+    // eslint-disable-next-line jsx-a11y/click-events-have-key-events
+    <div
+      className="fixed bottom-16 left-4 z-10 w-11/12 bg-red-600 opacity-95"
       onClick={toggleMiniPlayer}
     >
       <div className="flex items-center justify-between px-2 pb-1 pt-2">
@@ -76,6 +77,6 @@ export const MiniMusicPlayer = () => {
         </button>
       </div>
       <LinearProgressBar progress={progress} />
-    </button>
+    </div>
   )
 }

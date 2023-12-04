@@ -4,6 +4,7 @@
 
 body {
   background-color: #111827;
+  /* This removes pull to refresh on mobile devices */
   overscroll-behavior-y: contain;
 }
 
