@@ -107,13 +107,9 @@ export const useMusicPlayer = () => {
       resetTrackTime()
       onPlay()
 
-      if (currentTrackId === id) {
-        return setCurrentTrackId(undefined)
-      }
-
       setCurrentTrackId(id)
     },
-    [currentTrackId, onPlay, resetTrackTime, setCurrentTrackId],
+    [onPlay, resetTrackTime, setCurrentTrackId],
   )
 
   const onPreviousTrack = useCallback(() => {
