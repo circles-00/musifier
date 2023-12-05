@@ -62,10 +62,10 @@ export const useMusicPlayerQueue = () => {
       return undefined
     }
 
-    const nextTrackIndex = currentTrackIndex + 1
+    let nextTrackIndex = currentTrackIndex + 1
 
     if (nextTrackIndex >= queue.length) {
-      return 0
+      nextTrackIndex = 0
     }
 
     return queue[nextTrackIndex]
@@ -78,10 +78,10 @@ export const useMusicPlayerQueue = () => {
       return undefined
     }
 
-    const previousTrackIndex = currentTrackIndex - 1
+    let previousTrackIndex = currentTrackIndex - 1
 
     if (previousTrackIndex < 0) {
-      return queue.length - 1
+      previousTrackIndex = queue.length - 1
     }
 
     return queue[previousTrackIndex]

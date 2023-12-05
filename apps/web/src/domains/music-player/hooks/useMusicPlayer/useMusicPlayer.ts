@@ -8,6 +8,7 @@ import {
 import { DataService } from '@/services'
 import { useMutation } from '@tanstack/react-query'
 import { useCallback, useEffect, useMemo, useState } from 'react'
+import { EPlayingModes, TPlayingMode } from './types'
 import { useMusicPlayerQueue } from './useMusicPlayerQueue'
 import { useNavigationMusicPlayer } from './useNavigationMusicPlayer'
 
@@ -15,6 +16,7 @@ export const useMusicPlayer = () => {
   const [currentTime, setCurrentTime] = useState(0)
   const [isPlaying, setIsPlaying] = useState(false)
   const [isMiniPlayerVisible, setIsMiniPlayerVisible] = useState(true)
+  const [playingMode, setPlayingMode] = useState<TPlayingMode>('none')
 
   const seekTime = useMusicPlayerSeekTime()
   const currentTrackId = useMusicPlayerCurrentTrackId()
@@ -146,9 +148,32 @@ export const useMusicPlayer = () => {
     setIsMiniPlayerVisible((isVisible) => !isVisible)
   }, [setIsMiniPlayerVisible])
 
-  // Initialize audio element with track source
+  const onPlayingModeEnded = useMemo(() => {
+    switch (playingMode) {
+      case 'none':
+        return undefined
+      case 'repeat':
+        return () => onNextTrack()
+      case 'repeat-one':
+        return () => loadNewTrack(currentTrackId as number)
+    }
+  }, [currentTrackId, loadNewTrack, onNextTrack, playingMode])
+
+  const onChangePlayingMode = useCallback(() => {
+    const playingModeIndex = EPlayingModes.indexOf(playingMode)
+    const nextPlayingModeIndex = playingModeIndex + 1
+
+    if (nextPlayingModeIndex >= EPlayingModes.length) {
+      setPlayingMode(EPlayingModes[0])
+      return
+    }
+
+    setPlayingMode(EPlayingModes[nextPlayingModeIndex])
+  }, [playingMode])
+
+  // Add event listeners to the audio element
   useEffect(() => {
-    if (!src || !audioElement) {
+    if (!audioElement) {
       return
     }
 
@@ -157,13 +182,7 @@ export const useMusicPlayer = () => {
       resetTrackTime()
 
       // TODO: This will need to be changed when we implement shuffle & repeat
-      onNextTrack()
-    }
-
-    audioElement.src = src
-    audioElement.currentTime = seekTime
-    audioElement.ontimeupdate = () => {
-      setCurrentTime(audioElement.currentTime)
+      onPlayingModeEnded?.()
     }
 
     // This is to prevent the media playing from being blocked by the browser
@@ -179,16 +198,20 @@ export const useMusicPlayer = () => {
       audioElement.removeEventListener('loadeddata', onPlay)
       audioElement.removeEventListener('ended', onEnded)
     }
-  }, [
-    audioElement,
-    onNextTrack,
-    onPause,
-    onPlay,
-    resetTrackTime,
-    seekTime,
-    setSeekTime,
-    src,
-  ])
+  }, [audioElement, onPause, onPlay, onPlayingModeEnded, resetTrackTime])
+
+  // Initialize audio element with track source
+  useEffect(() => {
+    if (!src || !audioElement) {
+      return
+    }
+
+    audioElement.src = src
+    audioElement.currentTime = seekTime
+    audioElement.ontimeupdate = () => {
+      setCurrentTime(audioElement.currentTime)
+    }
+  }, [audioElement, seekTime, src])
 
   // Setup audio context
   // More info: https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API/Using_Web_Audio_API
@@ -215,7 +238,13 @@ export const useMusicPlayer = () => {
     }
   }, [audioElement?.currentTime, setIsPlaying, setSeekTime])
 
-  useNavigationMusicPlayer({ onPlay, onPause, seekTo, onPreviousTrack })
+  useNavigationMusicPlayer({
+    onPlay,
+    onPause,
+    seekTo,
+    onPreviousTrack,
+    onNextTrack,
+  })
 
   return {
     onPlay,
@@ -230,6 +259,8 @@ export const useMusicPlayer = () => {
     toggleMiniPlayer,
     onPreviousTrack,
     onNextTrack,
+    playingMode,
+    onChangePlayingMode,
     ...queueMethods,
   }
 }

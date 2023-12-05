@@ -3,13 +3,18 @@ import { useMusicPlayerContext } from '@/domains/music-player'
 import { useMusicPlayerCurrentTrackId } from '@/hooks'
 import { DataService } from '@/services'
 import { convertMsToS, getMinutesSecondsFromMs } from '@/utils'
-import {
-  BackwardIcon,
-  ForwardIcon,
-  PauseCircleIcon,
-  PlayCircleIcon,
-} from '@heroicons/react/24/solid'
 import { useQuery } from '@tanstack/react-query'
+import {
+  PlayIcon,
+  PauseIcon,
+  SkipNextIcon,
+  SkipPreviousIcon,
+} from '@/assets/svgs'
+import { useMemo } from 'react'
+import { RepeatIcon } from '@/assets/svgs/RepeatIcon'
+import { RepeatOnIcon } from '@/assets/svgs/RepeatOnIcon'
+import { RepeatOneOnIcon } from '@/assets/svgs/RepeatOneOnIcon'
+import { ShuffleIcon } from '@/assets/svgs/ShuffleIcon'
 
 export const MusicPlayerControls = () => {
   const currentTrackId = useMusicPlayerCurrentTrackId()
@@ -26,7 +31,20 @@ export const MusicPlayerControls = () => {
     seekTo,
     onPreviousTrack,
     onNextTrack,
+    playingMode,
+    onChangePlayingMode,
   } = useMusicPlayerContext()
+
+  const playingModeIcon = useMemo(() => {
+    switch (playingMode) {
+      case 'none':
+        return <RepeatIcon className="h-8 w-8" />
+      case 'repeat':
+        return <RepeatOnIcon className="h-8 w-8 fill-sky-500" />
+      case 'repeat-one':
+        return <RepeatOneOnIcon className="h-8 w-8 fill-sky-500" />
+    }
+  }, [playingMode])
 
   return (
     <>
@@ -46,19 +64,23 @@ export const MusicPlayerControls = () => {
 
       <div className="flex justify-center gap-4">
         {/* TODO: Change icons, they look terrible */}
+        <button>
+          <ShuffleIcon className="h-8 w-8" />
+        </button>
         <button onClick={onPreviousTrack}>
-          <BackwardIcon className="h-20 w-20" />
+          <SkipPreviousIcon className="h-16 w-16" />
         </button>
         <button onClick={onToggleMusicPlayer}>
           {isPlaying ? (
-            <PauseCircleIcon className="h-20 w-20" />
+            <PauseIcon className="h-20 w-20" />
           ) : (
-            <PlayCircleIcon className="h-20 w-20" />
+            <PlayIcon className="h-20 w-20" />
           )}
         </button>
         <button onClick={onNextTrack}>
-          <ForwardIcon className="h-20 w-20" />
+          <SkipNextIcon className="h-16 w-16" />
         </button>
+        <button onClick={onChangePlayingMode}>{playingModeIcon}</button>
       </div>
     </>
   )

@@ -7,7 +7,7 @@ import { useMusicPlayer } from './useMusicPlayer'
 interface IUserNavigationMusicPlayer
   extends Pick<
     ReturnType<typeof useMusicPlayer>,
-    'onPlay' | 'onPause' | 'seekTo' | 'onPreviousTrack'
+    'onPlay' | 'onPause' | 'seekTo' | 'onPreviousTrack' | 'onNextTrack'
   > {}
 
 export const useNavigationMusicPlayer = ({
@@ -15,6 +15,7 @@ export const useNavigationMusicPlayer = ({
   onPause,
   seekTo,
   onPreviousTrack,
+  onNextTrack,
 }: IUserNavigationMusicPlayer) => {
   const currentTrackId = useMusicPlayerCurrentTrackId()
   const { data } = useQuery({
@@ -71,12 +72,13 @@ export const useNavigationMusicPlayer = ({
         'previoustrack',
         onPreviousTrack,
       )
-      window.navigator.mediaSession.setActionHandler('nexttrack', () => {})
+      window.navigator.mediaSession.setActionHandler('nexttrack', onNextTrack)
     }
   }, [
     data?.artists,
     data?.image,
     data?.name,
+    onNextTrack,
     onPause,
     onPlay,
     onPreviousTrack,
