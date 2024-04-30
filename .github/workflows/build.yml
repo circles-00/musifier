@@ -1,0 +1,33 @@
+name: Build & Deploy
+
+on:
+  push:
+    branches: ['main']
+  pull_request:
+    branches: ['main']
+jobs:
+  build:
+    runs-on: [self-hosted, linux, ARM64]
+    env:
+      PORT: ${{ secrets.PORT }}
+      HOST: ${{ secrets.HOST }}
+      DATABASE_HOST: ${{ secrets.DATABASE_HOST }}
+      DATABASE_PORT: ${{ secrets.DATABASE_PORT }}
+      DATABASE_USERNAME: ${{ secrets.DATABASE_USERNAME }}
+      DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
+      DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
+      SPOTIFY_AUTH_BASE_URL: ${{ secrets.SPOTIFY_AUTH_BASE_URL }}
+      SPOTIFY_CLIENT_ID: ${{ secrets.SPOTIFY_CLIENT_ID }}
+      SPOTIFY_CLIENT_SECRET: ${{ secrets.SPOTIFY_CLIENT_SECRET }}
+      SYNC_CRON_TIME: ${{ secrets.SYNC_CRON_TIME }}
+      BRANCH_NAME: main # Maybe change this with an env variable
+      BUILD_NUMBER: ${{ github.sha }}
+      BACKEND_URL: ${{ secrets.BACKEND_URL }}
+      PORT_NUMBER_FRONT: ${{ secrets.PORT_NUMBER_FRONT }}
+      CACHE_PATH: ${{ secrets.CACHE_PATH }}
+    steps:
+      - uses: actions/checkout@v1
+      - run: docker compose build
+      - run: docker compose down
+      - run: docker compose up -d
+

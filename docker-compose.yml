@@ -1,0 +1,58 @@
+version: '3'
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: api.Dockerfile
+    image: musifier:${BUILD_NUMBER}
+    container_name: musifier-${BRANCH_NAME}
+    environment:
+      - PORT
+      - HOST
+      - DATABASE_HOST
+      - DATABASE_PORT
+      - DATABASE_USERNAME
+      - DATABASE_PASSWORD
+      - DATABASE_NAME
+      - SPOTIFY_AUTH_BASE_URL
+      - SPOTIFY_CLIENT_ID
+      - SPOTIFY_CLIENT_SECRET
+      - SYNC_CRON_TIME
+      - CACHE_PATH
+    restart: always
+    ports:
+      - '${PORT}:5000'
+    volumes:
+      - /opt/musifier/data-${BRANCH_NAME}:/usr/src/musifier/public:rw
+      - /opt/musifier/images-${BRANCH_NAME}/:/home/node/apps/api/uploads:rw
+  web:
+    build:
+      context: .
+      dockerfile: web.Dockerfile
+      args:
+        - BACKEND_URL=${BACKEND_URL}
+        - NEXTAUTH_URL=${NEXTAUTH_URL}
+    image: musifier_web:${BUILD_NUMBER}
+    container_name: musifier_web-${BRANCH_NAME}
+    restart: always
+    environment:
+      - BACKEND_URL=${BACKEND_URL}
+    ports:
+      - '${PORT_NUMBER_FRONT}:3000'
+    volumes:
+      - /opt/musifier_web/logs-${BRANCH_NAME}:/usr/src/musifier_web/logs:rw
+      - /opt/musifier_web/data-${BRANCH_NAME}:/usr/src/musifier_web/public:rw
+  db:
+    image: postgres:11.2-alpine
+    container_name: musifier-db-${BRANCH_NAME}
+    restart: always
+    environment:
+      - POSTGRES_DB=${DATABASE_NAME}
+      - POSTGRES_USER=${DATABASE_USERNAME}
+      - POSTGRES_PASSWORD=${DATABASE_PASSWORD}
+    volumes:
+      - /opt/musifier-db-${BRANCH_NAME}:/var/lib/postgresql/data
+    ports:
+      - '${DATABASE_PORT}:5432'
+

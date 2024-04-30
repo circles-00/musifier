@@ -14,7 +14,8 @@
     "lb4": "lb4",
     "lint": "turbo lint",
     "build": "turbo build",
-    "start": "turbo start"
+    "start": "turbo start",
+    "build:web": "turbo build --filter=web"
   },
   "engines": {
     "npm": "please-use-yarn",
