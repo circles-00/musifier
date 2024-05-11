@@ -27,7 +27,11 @@ jobs:
       BACKEND_URL: ${{ secrets.BACKEND_URL }}
       PORT_NUMBER_FRONT: ${{ secrets.PORT_NUMBER_FRONT }}
       CACHE_PATH: ${{ secrets.CACHE_PATH }}
+      PROXY_SERVER_HOST: ${{ secrets.PROXY_SERVER_HOST }}
+      PROXY_CLIENT_HOST: ${{ secrets.PROXY_CLIENT_HOST }}
+      PROXY_SECRET: ${{ secrets.PROXY_SECRET }}
     steps:
+      - run: sudo rm -rf ../musifier
       - uses: actions/checkout@v1
       - run: docker compose build
       - run: docker compose down

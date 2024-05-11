@@ -9,12 +9,12 @@ RUN mkdir -p /home/node
 WORKDIR /home/node
 
 # Copy needed package.json files
-COPY --chown=node ./package.json ./yarn.lock ./
-COPY --chown=node ./packages/config/eslint/package.json /home/node/packages/config/eslint/
-COPY --chown=node ./packages/config/tsconfig/package.json /home/node/packages/config/tsconfig/
-COPY --chown=node ./packages/music-downloader/package.json /home/node/packages/music-downloader/
+COPY --chown=node ../package.json ./yarn.lock ./
+COPY --chown=node ../packages/config/eslint/package.json /home/node/packages/config/eslint/
+COPY --chown=node ../packages/config/tsconfig/package.json /home/node/packages/config/tsconfig/
+COPY --chown=node ../packages/music-downloader/package.json /home/node/packages/music-downloader/
 
-COPY --chown=node ./apps/api/package.json /home/node/apps/api/
+COPY --chown=node ../apps/api/package.json /home/node/apps/api/
 
 RUN \
   yarn config set network-timeout 600000 -g && \
@@ -22,7 +22,7 @@ RUN \
   yarn cache clean
 
 # Bundle app source code
-COPY --chown=node . .
+COPY --chown=node .. .
 
 WORKDIR /home/node/apps/api/
 

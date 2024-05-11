@@ -4,7 +4,7 @@ services:
   backend:
     build:
       context: .
-      dockerfile: api.Dockerfile
+      dockerfile: ./deployment/api.Dockerfile
     image: musifier:${BUILD_NUMBER}
     container_name: musifier-${BRANCH_NAME}
     environment:
@@ -29,7 +29,7 @@ services:
   web:
     build:
       context: .
-      dockerfile: web.Dockerfile
+      dockerfile: ./deployment/web.Dockerfile
       args:
         - BACKEND_URL=${BACKEND_URL}
         - NEXTAUTH_URL=${NEXTAUTH_URL}
@@ -56,4 +56,23 @@ services:
       - /opt/musifier-db-${BRANCH_NAME}:/var/lib/postgresql/data
     ports:
       - '${DATABASE_PORT}:5432'
+
+  proxy-web:
+    image: darknet00/bore-proxy
+    environment:
+        - SERVER_HOST=${PROXY_SERVER_HOST}
+        - LOCAL_HOST=${PROXY_CLIENT_HOST}
+        - SECRET=${PROXY_SECRET}
+        - PORT=${PORT_NUMBER_FRONT}
+    container_name: musifier-proxy-web-${BRANCH_NAME}
+    restart: always
+  proxy-api:
+    image: darknet00/bore-proxy
+    environment:
+        - SERVER_HOST=${PROXY_SERVER_HOST}
+        - LOCAL_HOST=${PROXY_CLIENT_HOST}
+        - SECRET=${PROXY_SECRET}
+        - PORT=${PORT}
+    container_name: musifier-proxy-api-${BRANCH_NAME}
+    restart: always
 
