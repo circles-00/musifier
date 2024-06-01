@@ -16,7 +16,7 @@ import { FormProvider, useForm, useWatch } from 'react-hook-form'
 import { z } from 'zod'
 
 const validationSchema = z.object({
-  search: z.string().nonempty(),
+  search: z.string().min(1),
 })
 
 type TValidationSchema = z.infer<typeof validationSchema>
@@ -30,7 +30,7 @@ const SearchPage = () => {
   })
 
   const searchValue = useWatch({ control: methods.control, name: 'search' })
-  const debouncedSearchValue = useDebounce(searchValue, 100)
+  const debouncedSearchValue = useDebounce(searchValue, 300)
 
   // Note: Feature is not fully ready on backend, so disable the buttons for now
   const typesFilters = useMemo(

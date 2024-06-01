@@ -17,7 +17,7 @@ export class StreamController {
     @inject(STREAM_SERVICE) private readonly streamService: StreamService,
 
     @inject(RestBindings.Http.RESPONSE) private readonly response: Response,
-  ) { }
+  ) {}
 
   @get('/{id}')
   async streamTrack(@param.path.number('id') trackId: number) {
