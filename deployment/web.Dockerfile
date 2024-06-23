@@ -1,5 +1,5 @@
 ### Build image
-FROM node:18.12.1-buster-slim AS build
+FROM node:18.17.0-buster-slim AS build
 
 WORKDIR /home/node
 ENV YARN_CACHE_FOLDER=/var/yarn
@@ -28,7 +28,7 @@ WORKDIR /home/node
 RUN yarn build:web
 
 ### Final image, install production dependencies and do some cleanup
-FROM node:18.12.1-buster-slim AS production
+FROM node:18.17.0-buster-slim AS production
 WORKDIR /home/node
 RUN \
   apt update -qq && \
