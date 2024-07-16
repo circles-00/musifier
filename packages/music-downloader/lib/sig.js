@@ -39,7 +39,7 @@ exports.extractFunctions = body => {
     const ndx = body.indexOf(functionStart);
     if (ndx < 0) return '';
     const subBody = body.slice(ndx + functionStart.length - 1);
-    return `var ${functionName}=${utils.cutAfterJSON(subBody)}`;
+    return `var ${functionName}=${utils.cutAfterJS(subBody)}`;
   };
   const extractDecipher = () => {
     const functionName = utils.between(body, `a.set("alr","yes");c&&(c=`, `(decodeURIC`);
@@ -48,20 +48,23 @@ exports.extractFunctions = body => {
       const ndx = body.indexOf(functionStart);
       if (ndx >= 0) {
         const subBody = body.slice(ndx + functionStart.length);
-        let functionBody = `var ${functionStart}${utils.cutAfterJSON(subBody)}`;
+        let functionBody = `var ${functionStart}${utils.cutAfterJS(subBody)}`;
         functionBody = `${extractManipulations(functionBody)};${functionBody};${functionName}(sig);`;
         functions.push(functionBody);
       }
     }
   };
   const extractNCode = () => {
-    const functionName = utils.between(body, `&&(b=a.get("n"))&&(b=`, `(b)`);
+    // Note: Workaround, check: https://github.com/fent/node-ytdl-core/issues/1301#issuecomment-2223004197
+    // eslint-disable-next-line max-len
+    let functionName = utils.between(body, `&&(b=a.get("n"))&&(b=`, `(b)`) || utils.between(body, `&&(b=String.fromCharCode(110),c=a.get(b))&&(c=`, `(c)`);
+    if (functionName.includes('[')) functionName = utils.between(body, `var ${functionName.split('[')[0]}=[`, `]`);
     if (functionName && functionName.length) {
       const functionStart = `${functionName}=function(a)`;
       const ndx = body.indexOf(functionStart);
       if (ndx >= 0) {
         const subBody = body.slice(ndx + functionStart.length);
-        const functionBody = `var ${functionStart}${utils.cutAfterJSON(subBody)};${functionName}(ncode);`;
+        const functionBody = `var ${functionStart}${utils.cutAfterJS(subBody)};${functionName}(ncode);`;
         functions.push(functionBody);
       }
     }
