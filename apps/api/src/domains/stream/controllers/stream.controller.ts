@@ -29,11 +29,6 @@ export class StreamController {
 
     this.response.setHeader('Content-Type', 'audio/mpeg')
     this.response.setHeader('Accept-Ranges', 'bytes')
-    this.response.setHeader('Content-Length', trackResult.length)
-    this.response.setHeader(
-      'Content-Range',
-      `bytes 0-${trackResult.length}/${trackResult.length}`,
-    )
     this.response.setHeader(
       'Content-Disposition',
       'inline; filename="stream.mp3"',

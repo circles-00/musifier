@@ -1,5 +1,12 @@
 FROM node:18.17.0-buster-slim
 
+
+RUN \
+  apt update -qq && \
+  apt install -qq -y ffmpeg && \
+  apt autoremove -qq -y && \
+  apt-get -qq clean
+
 # Set to a non-root built-in user `node`
 USER node
 

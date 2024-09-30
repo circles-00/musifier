@@ -55,10 +55,18 @@ exports.extractFunctions = body => {
     }
   };
   const extractNCode = () => {
-    // Note: Workaround, check: https://github.com/fent/node-ytdl-core/issues/1301#issuecomment-2223004197
-    // eslint-disable-next-line max-len
-    let functionName = utils.between(body, `&&(b=a.get("n"))&&(b=`, `(b)`) || utils.between(body, `&&(b=String.fromCharCode(110),c=a.get(b))&&(c=`, `(c)`);
-    if (functionName.includes('[')) functionName = utils.between(body, `var ${functionName.split('[')[0]}=[`, `]`);
+    const alphanum = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTVUWXYZ.$_0123456789';
+    let functionName = '';
+    let clue = body.indexOf('enhanced_except');
+    if (clue < 0) clue = body.indexOf('String.prototype.split.call(a,"")');
+    if (clue < 0) clue = body.indexOf('Array.prototype.join.call(b,"")');
+    if (clue > 0) {
+      let nstart = body.lastIndexOf(`=function(a){`, clue) - 1;
+      while (nstart && alphanum.includes(body.charAt(nstart))) {
+        functionName = body.charAt(nstart) + functionName;
+        nstart--;
+      }
+    }
     if (functionName && functionName.length) {
       const functionStart = `${functionName}=function(a)`;
       const ndx = body.indexOf(functionStart);

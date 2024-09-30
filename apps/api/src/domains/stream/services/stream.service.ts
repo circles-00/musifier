@@ -13,6 +13,7 @@ import {
 import { join } from 'path'
 import { Readable } from 'stream'
 import { env } from '../../../utils'
+import ffmpeg from 'fluent-ffmpeg'
 
 export class StreamService {
   private readonly cachePath = env.CACHE_PATH
@@ -29,15 +30,32 @@ export class StreamService {
     return videos
   }
 
+  convertWithFfmpeg(stream: Readable) {
+    return ffmpeg(stream).audioBitrate(128).toFormat('mp3').pipe() as Readable
+  }
+
   downloadTrackFromYoutube(trackUrl: string) {
-    return ytdl(trackUrl, { filter: 'audioonly', quality: 'highestaudio' })
+    return this.convertWithFfmpeg(
+      ytdl(trackUrl, {
+        filter: ({ audioQuality, mimeType }) => {
+          return (
+            audioQuality === 'AUDIO_QUALITY_LOW' &&
+            Boolean(mimeType?.includes('video/mp4'))
+          )
+        },
+      }),
+    )
   }
 
   async getTrackMetadata(trackUrl: string) {
     const info = await ytdl.getInfo(trackUrl)
     return ytdl.chooseFormat(info.formats, {
-      filter: 'audioonly',
-      quality: 'highestaudio',
+      filter: ({ audioQuality, mimeType }) => {
+        return (
+          audioQuality === 'AUDIO_QUALITY_LOW' &&
+          Boolean(mimeType?.includes('video/mp4'))
+        )
+      },
     })
   }
 
@@ -108,11 +126,9 @@ export class StreamService {
       const trackStream = this.downloadTrackFromYoutube(trackFromYt.link)
 
       this.cacheTrack(trackName, trackFromDb.id, trackStream)
-      const trackMetadata = await this.getTrackMetadata(trackFromYt.link)
 
       return {
         track: trackStream,
-        length: Number.parseInt(trackMetadata.contentLength),
         isCached: false,
       }
     }
@@ -121,7 +137,6 @@ export class StreamService {
 
     return {
       track: Readable.from(cacheResult),
-      length: cacheResult.length,
       isCached: true,
     }
   }
