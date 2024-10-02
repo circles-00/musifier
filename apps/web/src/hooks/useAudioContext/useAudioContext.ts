@@ -9,7 +9,8 @@ export const useAudioContext = () => {
       return null
     }
 
-    return new AudioContext()
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    return new (window.AudioContext || (window as any).webkitAudioContext)()
   }, [isBrowser])
 
   return { audioContext }
