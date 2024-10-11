@@ -57,22 +57,22 @@ services:
     ports:
       - '${DATABASE_PORT}:5432'
 
-  proxy-web:
-    image: darknet00/bore-proxy
-    environment:
-        - SERVER_HOST=${PROXY_SERVER_HOST}
-        - LOCAL_HOST=${PROXY_CLIENT_HOST}
-        - SECRET=${PROXY_SECRET}
-        - PORT=${PORT_NUMBER_FRONT}
-    container_name: musifier-proxy-web-${BRANCH_NAME}
-    restart: always
-  proxy-api:
-    image: darknet00/bore-proxy
-    environment:
-        - SERVER_HOST=${PROXY_SERVER_HOST}
-        - LOCAL_HOST=${PROXY_CLIENT_HOST}
-        - SECRET=${PROXY_SECRET}
-        - PORT=${PORT}
-    container_name: musifier-proxy-api-${BRANCH_NAME}
-    restart: always
-
+  # proxy-web:
+  #   image: darknet00/bore-proxy
+  #   environment:
+  #       - SERVER_HOST=${PROXY_SERVER_HOST}
+  #       - LOCAL_HOST=${PROXY_CLIENT_HOST}
+  #       - SECRET=${PROXY_SECRET}
+  #       - PORT=${PORT_NUMBER_FRONT}
+  #   container_name: musifier-proxy-web-${BRANCH_NAME}
+  #   restart: always
+  # proxy-api:
+  #   image: darknet00/bore-proxy
+  #   environment:
+  #       - SERVER_HOST=${PROXY_SERVER_HOST}
+  #       - LOCAL_HOST=${PROXY_CLIENT_HOST}
+  #       - SECRET=${PROXY_SECRET}
+  #       - PORT=${PORT}
+  #   container_name: musifier-proxy-api-${BRANCH_NAME}
+  #   restart: always
+  #
