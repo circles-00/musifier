@@ -30,7 +30,7 @@ const SearchPage = () => {
   })
 
   const searchValue = useWatch({ control: methods.control, name: 'search' })
-  const debouncedSearchValue = useDebounce(searchValue, 300)
+  const debouncedSearchValue = useDebounce(searchValue, 200)
 
   // Note: Feature is not fully ready on backend, so disable the buttons for now
   const typesFilters = useMemo(
