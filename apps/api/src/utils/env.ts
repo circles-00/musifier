@@ -1,7 +1,7 @@
 import { cleanEnv, str, num } from 'envalid'
 
 export const env = cleanEnv(process.env, {
-  PORT: num({ default: 5000 }),
+  API_PORT: num({ default: 5000 }),
   HOST: str({ default: 'localhost' }),
   DATABASE_HOST: str({ default: 'localhost' }),
   DATABASE_PORT: num({ default: 5432 }),
