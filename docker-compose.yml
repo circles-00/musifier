@@ -11,7 +11,7 @@ services:
       - PORT
       - HOST
       - DATABASE_HOST
-      - DATABASE_PORT
+      - DATABASE_PORT=5432
       - DATABASE_USERNAME
       - DATABASE_PASSWORD
       - DATABASE_NAME
