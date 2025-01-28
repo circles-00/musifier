@@ -31,6 +31,7 @@ jobs:
       PROXY_CLIENT_HOST: ${{ secrets.PROXY_CLIENT_HOST }}
       PROXY_SECRET: ${{ secrets.PROXY_SECRET }}
       DISABLE_SYNC: ${{ secrets.DISABLE_SYNC }}
+      API_PORT: ${{ secrets.API_PORT }}
     steps:
       - run: sudo rm -rf ../musifier
       - uses: actions/checkout@v1
