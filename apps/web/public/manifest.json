@@ -22,7 +22,7 @@
   "name": "Musifier",
   "short_name": "Musifier",
   "scope": "/",
-  "start_url": "https://musifier.circles-dev.tech",
+  "start_url": "musifier.circles-dev.tech/",
   "description": "Listen to Music from different sources",
-  "id": "https://musifier.circles-dev.tech"
+  "id": "musifier.circles-dev.tech"
 }

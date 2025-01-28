@@ -1,0 +1,47 @@
+{
+  "packageId": "tech.circles_dev.musifier.twa",
+  "host": "musifier.circles-dev.tech",
+  "name": "Musifier",
+  "launcherName": "Musifier",
+  "display": "standalone",
+  "themeColor": "#111827",
+  "themeColorDark": "#000000",
+  "navigationColor": "#000000",
+  "navigationColorDark": "#000000",
+  "navigationDividerColor": "#000000",
+  "navigationDividerColorDark": "#000000",
+  "backgroundColor": "#111827",
+  "enableNotifications": true,
+  "startUrl": "/",
+  "iconUrl": "https://musifier.circles-dev.tech/icon512_rounded.png",
+  "maskableIconUrl": "https://musifier.circles-dev.tech/icon512_maskable.png",
+  "splashScreenFadeOutDuration": 300,
+  "signingKey": {
+    "path": "/home/darknet/CodingProjects/personal/musifier/apps/android/android.keystore",
+    "alias": "android"
+  },
+  "appVersionName": "2",
+  "appVersionCode": 2,
+  "shortcuts": [],
+  "generatorApp": "bubblewrap-cli",
+  "webManifestUrl": "https://musifier.circles-dev.tech/manifest.json",
+  "fallbackType": "customtabs",
+  "features": {},
+  "alphaDependencies": {
+    "enabled": false
+  },
+  "enableSiteSettingsShortcut": true,
+  "isChromeOSOnly": false,
+  "isMetaQuest": false,
+  "fullScopeUrl": "https://musifier.circles-dev.tech/",
+  "minSdkVersion": 21,
+  "orientation": "portrait",
+  "fingerprints": [
+    {
+      "value": "52:08:DE:22:84:4B:5D:6B:6C:23:7F:64:C6:09:FB:16:6B:24:5F:90:D5:54:AE:7D:64:BF:0C:83:EE:6C:13:65"
+    }
+  ],
+  "additionalTrustedOrigins": [],
+  "retainedBundles": [],
+  "appVersion": "2"
+}
