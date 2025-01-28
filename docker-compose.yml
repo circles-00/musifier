@@ -20,6 +20,7 @@ services:
       - SPOTIFY_CLIENT_SECRET
       - SYNC_CRON_TIME
       - CACHE_PATH
+      - DISABLE_SYNC
     restart: always
     ports:
       - '${API_PORT}:5000'

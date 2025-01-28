@@ -4,7 +4,8 @@
   "compilerOptions": {
     "experimentalDecorators": true,
     "outDir": "dist",
-    "rootDir": "src"
+    "rootDir": "src",
+    "lib": ["es6", "dom"]
   },
   "include": [
     "src"

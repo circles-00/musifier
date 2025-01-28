@@ -10,6 +10,11 @@ export class SchedulingService extends CronJob {
     super({
       name: 'sync-scheduling',
       onTick: async () => {
+        if (env.DISABLE_SYNC) {
+          console.log('DISABLE_SYNC is TRUE, abort syncing data...')
+          return
+        }
+
         console.log('Syncing data...')
         await this.syncService.syncData()
       },
