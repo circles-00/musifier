@@ -1,5 +1,5 @@
 {
-  "theme_color": "#0ea4e7",
+  "theme_color": "#111827",
   "background_color": "#111827",
   "icons": [
     {
@@ -22,7 +22,7 @@
   "name": "Musifier",
   "short_name": "Musifier",
   "scope": "/",
-  "start_url": "https://musifier-web.vercel.app",
+  "start_url": "https://musifier.circles-dev.tech",
   "description": "Listen to Music from different sources",
-  "id": "https://musifier-web.vercel.app"
+  "id": "https://musifier.circles-dev.tech"
 }
