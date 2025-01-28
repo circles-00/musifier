@@ -19,7 +19,6 @@ WORKDIR /home/node
 COPY --chown=node ../package.json ./yarn.lock ./
 COPY --chown=node ../packages/config/eslint/package.json /home/node/packages/config/eslint/
 COPY --chown=node ../packages/config/tsconfig/package.json /home/node/packages/config/tsconfig/
-COPY --chown=node ../packages/music-downloader/package.json /home/node/packages/music-downloader/
 
 COPY --chown=node ../apps/api/package.json /home/node/apps/api/
 

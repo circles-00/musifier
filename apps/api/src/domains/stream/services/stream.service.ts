@@ -2,7 +2,7 @@ import { HttpErrors } from '@loopback/rest'
 import { Repository, typeorm } from '@loopback/typeorm'
 import { Track } from '../../../entities'
 import Youtube from '@yimura/scraper'
-import ytdl from 'music-downloader'
+import ytdl from '@distube/ytdl-core'
 import {
   createWriteStream,
   existsSync,
