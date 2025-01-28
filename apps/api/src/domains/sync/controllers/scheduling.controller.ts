@@ -7,7 +7,10 @@ import { SyncService } from '../services'
 export class SchedulingController {
   constructor(@inject(SYNC_SERVICE) private syncService: SyncService) {}
 
-  @get('/sync')
+  @get('/sync', {
+    responses: {},
+    'x-visibility': 'undocumented',
+  })
   async sync() {
     this.syncService.syncData()
     return 'success'
