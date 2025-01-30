@@ -26,6 +26,13 @@ import { TracksService, TRACKS_SERVICE } from './domains/tracks'
 import { StreamService, STREAM_SERVICE } from './domains/stream'
 import { SEARCH_SERVICE } from './domains/search/keys'
 import { SearchService } from './domains/search/services/search.service'
+import { AuthenticationComponent } from '@loopback/authentication'
+import {
+  JWTAuthenticationComponent,
+  TokenServiceBindings,
+  UserServiceBindings,
+} from '@loopback/authentication-jwt'
+import { UserService } from './domains/auth/services/user.service'
 
 export { ApplicationConfig }
 
@@ -36,8 +43,6 @@ export class ApiApplication extends BootMixin(
     super(options)
     this.connection(PostgresConnection)
 
-    this.setupBindings()
-
     this.sequence(MySequence)
 
     this.static('/', path.join(__dirname, '../public'))
@@ -47,6 +52,8 @@ export class ApiApplication extends BootMixin(
     })
 
     this.registerComponents()
+
+    this.setupBindings()
 
     this.projectRoot = __dirname
     // Customize @loopback/boot Booter Conventions here
@@ -63,6 +70,9 @@ export class ApiApplication extends BootMixin(
   registerComponents(): void {
     this.component(RestExplorerComponent)
     this.component(CronComponent)
+
+    this.component(AuthenticationComponent)
+    this.component(JWTAuthenticationComponent)
   }
 
   setupBindings(): void {
@@ -78,5 +88,8 @@ export class ApiApplication extends BootMixin(
     this.bind(SEARCH_SERVICE).toClass(SearchService)
 
     this.add(schedulingServiceBinding)
+
+    this.bind(TokenServiceBindings.TOKEN_EXPIRES_IN).to('1296000') // 15 days
+    this.bind(UserServiceBindings.USER_SERVICE).toClass(UserService)
   }
 }
