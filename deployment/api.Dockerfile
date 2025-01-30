@@ -22,6 +22,8 @@ COPY --chown=node ../packages/config/tsconfig/package.json /home/node/packages/c
 
 COPY --chown=node ../apps/api/package.json /home/node/apps/api/
 
+RUN mkdir -p /home/node/apps/api/cache
+
 RUN \
   yarn config set network-timeout 600000 -g && \
   yarn install --frozen-lockfile && \

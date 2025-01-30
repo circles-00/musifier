@@ -27,6 +27,7 @@ services:
     volumes:
       - /opt/musifier/data-${BRANCH_NAME}:/usr/src/musifier/public:rw
       - /opt/musifier/images-${BRANCH_NAME}/:/home/node/apps/api/uploads:rw
+      - /opt/musifier/music-cache-${BRANCH_NAME}:/home/node/apps/api/cache:rw
   web:
     build:
       context: .
