@@ -12,7 +12,7 @@ import { Base } from './base'
 
 @Entity()
 export class Track extends Base {
-  @Column()
+  @Column({ nullable: true })
   externalId: string
 
   @Column()
